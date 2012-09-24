@@ -48,6 +48,7 @@
 int main (int argc, char** argv)
 {
     QApplication* app = new QApplication (argc, argv);
+
     app->setApplicationName ("SpeechControl");
     app->setOrganizationDomain ("thesii.org");
     app->setOrganizationName ("Synthetic Intellect Institute");
@@ -55,6 +56,7 @@ int main (int argc, char** argv)
     app->setApplicationVersion (SPCHCNTRL_BUILD_VERSION);
     app->setQuitOnLastWindowClosed (false);
 
+    // Initialize SpeechControl's core.
     SpeechControl::Core appCore (argc, argv, app);
     appCore.start();
     return app->exec();

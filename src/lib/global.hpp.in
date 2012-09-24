@@ -39,14 +39,16 @@
  * @ingroup SpeechControlMacros
  * @brief Holds the version information of PocketSphinx.
  */
-#define POCKETSPHINX_VERSION "@POCKETSPHINX_VERSION@"
+#define POCKETSPHINX_VERSION_STR "@POCKETSPHINX_VERSION@"
+#define POCKETSPHINX_VERSION @POCKETSPHINX_VERSION
 
 /**
  * @def SPCHCNTRL_BUILD_VERSION
  * @ingroup SpeechControlMacros
  * @brief Holds the build version of SpeechControl's library.
  */
-#define SPCHCNTRL_BUILD_VERSION "@SPCHCNTRL_LIB_VERSION@"
+#define SPCHCNTRL_BUILD_VERSION_STR "@SPCHCNTRL_LIB_VERSION@"
+#define SPCHCNTRL_BUILD_VERSION @SPCHCNTRL_LIB_VERSION@
 
 /**
  * @def SPCHCNTRL_BUILD_DATE
