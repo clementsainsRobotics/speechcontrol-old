@@ -53,7 +53,7 @@ int main (int argc, char** argv)
     app->setOrganizationDomain ("thesii.org");
     app->setOrganizationName ("Synthetic Intellect Institute");
     app->setWindowIcon (QIcon (":/logo/sc-large"));
-    app->setApplicationVersion (SPCHCNTRL_BUILD_VERSION);
+    app->setApplicationVersion (SPCHCNTRL_BUILD_VERSION_STR);
     app->setQuitOnLastWindowClosed (false);
 
     // Initialize SpeechControl's core.
