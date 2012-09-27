@@ -22,37 +22,12 @@
 
 using namespace SpeechControl;
 
-AbstractSphinxPrivate::AbstractSphinxPrivate (AbstractSphinx* p_qPtr) :
-    m_pipeline(), m_psphinx(), m_vader(), m_bus(),
-    m_running (AbstractSphinx::NotPrepared), m_ready (AbstractSphinx::NotPrepared),
-    q_ptr(p_qPtr)
-{
-    clear();
-}
+DecoderPrivate::DecoderPrivate (Decoder* p_qPtr) :
+    config(0), decoder(0),
+    languageModel(0), acousticModel(0),
+    dictionary(0), q_ptr(p_qPtr)
+    {}
 
-void AbstractSphinxPrivate::clear()
-{
-    if (!m_pipeline.isNull()) {
-        m_pipeline->setState (QGst::StateNull);
-    }
-
-    if (!m_psphinx.isNull()) {
-        m_psphinx->setState (QGst::StateNull);
-    }
-
-    if (!m_vader.isNull()) {
-        m_vader->setState (QGst::StateNull);
-    }
-
-    m_pipeline.clear();
-    m_psphinx.clear();
-    m_vader.clear();
-    m_bus.clear();
-}
-
-AbstractSphinxPrivate::~AbstractSphinxPrivate()
-{
-    clear();
-}
+DecoderPrivate::~DecoderPrivate(){}
 
 // kate: indent-mode cstyle; replace-tabs on; 

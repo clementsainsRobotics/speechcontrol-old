@@ -35,7 +35,7 @@ class ServicePrivate;
  * @note This class is not meant for casual programming. It's solely used in DesktopControl::Agent.
  * @internal
  **/
-class Sphinx : public AbstractSphinx
+class Sphinx : public Decoder
 {
     Q_OBJECT
     Q_DISABLE_COPY (Sphinx)

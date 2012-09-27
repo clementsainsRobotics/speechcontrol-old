@@ -40,7 +40,7 @@ class ServicePrivate;
  * @note This class is not meant to be used for typical programming. It's used exclusively by Dictation::Agent.
  * @see Dictation::Agent
  **/
-class Sphinx : public AbstractSphinx
+class Sphinx : public Decoder
 {
     Q_OBJECT
     Q_DISABLE_COPY (Sphinx)

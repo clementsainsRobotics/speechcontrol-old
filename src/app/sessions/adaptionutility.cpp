@@ -356,7 +356,7 @@ QString AdaptationUtility::obtainPhaseText (const Phase& p_phase) const
 
 void AdaptationUtility::copyAcousticModel()
 {
-    m_modelResult = m_modelBase->new_model();
+    m_modelResult = m_modelBase->clone();
     next_phase();
 }
 
@@ -448,7 +448,7 @@ void AdaptationUtility::generateMixtureWeights()
  */
 void AdaptationUtility::convertModelDefinitions()
 {
-    QFile* fileMdef = m_modelResult->modelDefinitions();
+    QFile* fileMdef = m_modelResult->definitions();
 
     QStringList args;
     args << "-text"     << fileMdef->fileName()
@@ -497,7 +497,7 @@ void AdaptationUtility::collectAcousticStatistics()
 
     QStringList args;
     args << "-hmmdir"    << m_modelResult->path()
-         << "-moddeffn"  << (m_modelResult->modelDefinitions()->fileName() + ".txt")
+         << "-moddeffn"  << (m_modelResult->definitions()->fileName() + ".txt")
          << "-ts2cbfn"   << ".semi."
          << "-feat"      << "1s_c_d_dd" /// @todo Automatically detect correct -feat argument
          << "-svspec"    << "0-12/13-25/26-38"
@@ -603,7 +603,7 @@ void AdaptationUtility::generateSendump()
 {
     QStringList args;
     args << "-pocketsphinx" << "yes"
-         << "-modddefn"     << (m_modelResult->modelDefinitions()->fileName() + "txt")
+         << "-modddefn"     << (m_modelResult->definitions()->fileName() + "txt")
          << "-mixwfn"       << (m_modelResult->mixtureWeights()->fileName())
          << "-sendumpfn"    << (m_modelResult->senDump()->fileName())
          ;
