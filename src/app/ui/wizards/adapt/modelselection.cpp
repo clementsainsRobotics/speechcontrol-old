@@ -58,7 +58,7 @@ void ModelSelection::initializePage()
 void ModelSelection::fillModelsForComboBox (QComboBox* p_comboBox)
 {
     p_comboBox->clear();
-    AcousticModelList models = AcousticModel::allModels();
+    AcousticModelList models = AcousticModel::models();
     QStringList paths;
 
     Q_FOREACH (const AcousticModel * model, models) {

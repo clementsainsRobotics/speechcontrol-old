@@ -26,17 +26,17 @@
 
 using namespace SpeechControl::Dictation;
 
-Sphinx::Sphinx (QObject* p_parent) : AbstractSphinx (p_parent)
+Sphinx::Sphinx (QObject* p_parent) : Decoder (p_parent)
 {
     init();
 }
 
-Sphinx::Sphinx (const QString& p_description, QObject* p_parent) : AbstractSphinx (p_description, p_parent)
+Sphinx::Sphinx (const QString& p_description, QObject* p_parent) : Decoder (p_description, p_parent)
 {
     init();
 }
 
-Sphinx::Sphinx (QGst::PipelinePtr p_pipeline, QObject* p_parent) : AbstractSphinx (p_pipeline, p_parent)
+Sphinx::Sphinx (QGst::PipelinePtr p_pipeline, QObject* p_parent) : Decoder (p_pipeline, p_parent)
 {
     init();
 }

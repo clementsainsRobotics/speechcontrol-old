@@ -95,7 +95,7 @@ void ModelSettingsPane::updateUi()
 void ModelSettingsPane::updateAcousticTab()
 {
     QListWidget* widget = m_ui->listWidgetAcoustic;
-    AcousticModelList models = AcousticModel::allModels();
+    AcousticModelList models = AcousticModel::models();
     widget->clear();
 
     const uint index = m_ui->comboBoxAcousticModelView->currentIndex();

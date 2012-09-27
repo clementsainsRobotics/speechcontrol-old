@@ -1,7 +1,7 @@
 /***
  *  This file is part of SpeechControl.
  *
- *  Copyright (C) 2012 Jacky Alciné <jackyalcine@gmail.com>
+ *  Copyright (C) 2012 Jacky Alciné <jacky.alcine@thesii.org>
  *
  *  SpeechControl is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -21,29 +21,47 @@
 #ifndef SPCHCNTRL_LIB_SPHINX_ABSTRACT_HXX_
 #define SPCHCNTRL_LIB_SPHINX_ABSTRACT_HXX_
 
-#include <QGst/Bus>
-#include <QGst/Element>
-#include <QGst/Pipeline>
-
+#include <pocketsphinx.h>
 #include <lib/sphinx/abstract.hpp>
 
 namespace SpeechControl
 {
 
-struct AbstractSphinxPrivate {
-    Q_DECLARE_PUBLIC (AbstractSphinx)
-    explicit AbstractSphinxPrivate (AbstractSphinx* p_qPtr);
-    virtual ~AbstractSphinxPrivate();
-    void clear();
+/**
+ * @struct DecoderPrivate
+ *
+ * Contains the internal private work of the decoder for
+ * SpeechControl.
+ */
+struct SPCH_EXPORT DecoderPrivate {
+    Q_DECLARE_PUBLIC (Decoder)
 
-    QGst::PipelinePtr      m_pipeline;
-    QGst::ElementPtr       m_psphinx;
-    QGst::ElementPtr       m_vader;
-    QGst::BusPtr           m_bus;
-    AbstractSphinx::States m_running;
-    AbstractSphinx::States m_ready;
-    AbstractSphinx* q_ptr;
+    /**
+     * @ctor
+     * @fn DecoderPrivate
+     *
+     * Creates a new d-pointer for a Decoder object.
+     *
+     * @param p_qPtr The Decoder that this d-pointer is designed for.
+     */
+    explicit DecoderPrivate (Decoder* p_qPtr);
+
+    /**
+     * @dtor
+     * @fn ~DecoderPrivate
+     *
+     * Represents the destructor for the Decoder object.
+     */
+    virtual ~DecoderPrivate();
+
+    cmd_ln_t* config;
+    ps_decoder_t* decoder;
+    LanguageModel* languageModel;
+    AcousticModel* acousticModel;
+    Dictionary* dictionary;
+    Decoder* q_ptr;
 };
+
 }
 
 #endif /* SPCHCNTRL_LIB_AUDIOSOURCE_ABSTRACT_HXX_ */

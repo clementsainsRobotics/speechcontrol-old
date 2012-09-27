@@ -2,6 +2,7 @@ project(SpeechControl)
 cmake_minimum_required(VERSION 2.8)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
+
 ## Options to toggle components of SpeechControl.
 ## By default, they're all off, just to speed up build times :)
 option(WITH_PYTHON_BINDINGS    "Generate Python support for SpeechControl?" OFF)
@@ -13,7 +14,7 @@ option(WITH_TESTS              "Generate the test build system?"            OFF)
 find_package(PkgConfig 0.2 REQUIRED)
 find_package(Qt4 4.7 COMPONENTS
   QtCore
-  QtGui
+  QtXml
   REQUIRED)
 find_package(SphinxBase 0.7 REQUIRED)
 find_package(PocketSphinx 0.7 REQUIRED)
@@ -27,13 +28,13 @@ set(SPCHCNTRL_BUILDING ON)
 set(SPCHCNTRL_CMAKE_SDIR "${PROJECT_SOURCE_DIR}/cmake")
 set(SPCHCNTRL_INCLUDE_DIRS ${QT_INCLUDE_DIR}
     ${QT_QTCORE_INCLUDE_DIR}
-    ${QT_QTGUI_INCLUDE_DIR}
+    ${QT_QTXML_INCLUDE_DIR}
     ${SPCHCNTRL_INCLUDE_DIR}
     ${POCKETSPHINX_INCLUDE_DIRS})
 set(SPCHCNTRL_BUILD_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}/src"
     "${PROJECT_BINARY_DIR}/src")
 set(SPCHCNTRL_LIBRARIES ${QT_QTCORE_LIBRARY}
-    ${QT_QTGUI_LIBRARY}
+    ${QT_QTXML_LIBRARY}
     ${POCKETSPHINX_LIBRARIES})
 
 ## The subdirectories, order's vital here.
