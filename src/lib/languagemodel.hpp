@@ -33,6 +33,8 @@
 
 #include <lib/global.hpp>
 
+#include <ngram_model.h>
+
 namespace SpeechControl {
 
 class LanguageModel;
@@ -111,6 +113,8 @@ public:
      * @brief Erases this LanguageModel.
      **/
     void erase();
+    ngram_model_t* ngram() const;
+    QString internalName() const;
 };
 
 }
