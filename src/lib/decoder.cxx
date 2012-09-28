@@ -18,16 +18,51 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "lib/sphinx/abstractprivate.hpp"
+#include "lib/decoderprivate.hpp"
+#include <QStringList>
 
 using namespace SpeechControl;
 
 DecoderPrivate::DecoderPrivate (Decoder* p_qPtr) :
-    config(0), decoder(0),
-    languageModel(0), acousticModel(0),
-    dictionary(0), q_ptr(p_qPtr)
-    {}
+    config(0), decoder(0), languageModel(0),
+    acousticModel(0), dictionary(0), q_ptr(p_qPtr)
+{
+    config = cmd_ln_init(NULL,ps_args(),FALSE,NULL);
+    updateDecoder();
+}
 
-DecoderPrivate::~DecoderPrivate(){}
+void DecoderPrivate::updateConfiguration(const QMap< QString, QString >& p_args){
+    // Build up the PocketSphinx configuration object.
+    // This requires a few arguments.
+    // 1) a previously defined cmd_ln_t to be updated.
+    // 2) argument definitions (defaults are in ps_args()).
+    // 3) a boolean value telling the system whether or not to fail on strict argument parsing.
+    // 4 + 5, ..., n-1, n) arguments to pass in; the first being the argument name and the second being the argument value.
+
+    // Since we can't just expand the name, we'll do this...
+    QString arg, value;
+    QStringList args = p_args.keys();
+    for (ushort i = 0; i < args.count(); i++){
+        arg = args.at(i);
+        value = p_args.value(arg);
+        config = cmd_ln_init(config,ps_args(),FALSE,
+                             arg.toStdString().c_str(),
+                             value.toStdString().c_str());
+    }
+}
+
+void DecoderPrivate::updateDecoder(){
+    if (decoder){
+        ps_free(decoder);
+        decoder = 0;
+    }
+    
+    decoder = ps_init(config);
+}
+
+DecoderPrivate::~DecoderPrivate(){
+    ps_free(decoder);
+    cmd_ln_free_r(config);
+}
 
 // kate: indent-mode cstyle; replace-tabs on; 
