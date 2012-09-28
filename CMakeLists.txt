@@ -39,8 +39,8 @@ set(SPCHCNTRL_LIBRARIES ${QT_QTCORE_LIBRARY}
 
 ## The subdirectories, order's vital here.
 add_subdirectory(cmake)
-add_subdirectory(src)
 add_subdirectory(res)
+add_subdirectory(src)
 
 if(WITH_TESTS)
     add_subdirectory(tests)
