@@ -22,7 +22,10 @@
 #define SPCHCNTRL_LIB_SPHINX_ABSTRACT_HXX_
 
 #include <pocketsphinx.h>
-#include <lib/sphinx/abstract.hpp>
+#include <lib/decoder.hpp>
+
+#include <QString>
+#include <QMap>
 
 namespace SpeechControl
 {
@@ -53,6 +56,23 @@ struct SPCH_EXPORT DecoderPrivate {
      * Represents the destructor for the Decoder object.
      */
     virtual ~DecoderPrivate();
+
+    /**
+     * @fn updateConfiguration
+     *
+     * Reloads config with new bits of information passed to it.
+     *
+     * @params p_args The arguments to update the configuration objects with.
+     */
+    void updateConfiguration(const QMap<QString,QString>& p_args);
+
+    /**
+     * @fn updateDecoder
+     *
+     * Reloads the decoder with information from the configuration.
+     * 
+     */
+    void updateDecoder();
 
     cmd_ln_t* config;
     ps_decoder_t* decoder;

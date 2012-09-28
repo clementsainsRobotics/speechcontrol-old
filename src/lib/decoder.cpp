@@ -24,8 +24,8 @@
 #include "lib/acousticmodel.hpp"
 #include "lib/dictionary.hpp"
 #include "lib/languagemodel.hpp"
-#include "lib/sphinx/abstractprivate.hpp"
-#include "lib/sphinx/abstract.hpp"
+#include "lib/decoderprivate.hpp"
+#include "lib/decoder.hpp"
 
 using namespace SpeechControl;
 
@@ -71,6 +71,8 @@ void Decoder::setLanguageModel (const QString& p_path)
     
     if (QFile::exists (p_path)) {
         d->languageModel = LanguageModel::fromDirectory(p_path);
+        ngram_model_t* ngram_model = ps_get_lmset(d->decoder);
+        ngram_model_set_select(ngram_model,languageModel()->internalName().toLocal8Bit());
     }
     else {
         qWarning() << "[AbstractSphinx] Given language model path" << p_path << "does not exist.";
@@ -126,5 +128,5 @@ Decoder::~Decoder()
 {
 }
 
-#include "sphinx/abstract.moc"
+#include "decoder.moc"
 // kate: indent-mode cstyle; indent-width 4; replace-tabs on;
