@@ -61,13 +61,14 @@ function(get_git_head_revision _refspecvar _hashvar)
 	if(NOT EXISTS "${GIT_DIR}/HEAD")
 		return()
 	endif()
-	set(HEAD_FILE "${GIT_DATA}/HEAD")
-	configure_file("${GIT_DIR}/HEAD" "${HEAD_FILE}" COPYONLY)
 
-	configure_file("${_gitdescmoddir}/GetGitRevisionDescription.cmake.in"
-		"${GIT_DATA}/grabRef.cmake"
-		@ONLY)
-	include("${GIT_DATA}/grabRef.cmake")
+    configure_file("${_gitdescmoddir}/GetGitRevisionDescription.cmake.in"
+            "${GIT_DATA}/grabRef.cmake"
+    @ONLY)
+    include("${GIT_DATA}/grabRef.cmake")
+
+    set(HEAD_FILE "${GIT_DATA}/HEAD")
+	configure_file("${GIT_DIR}/HEAD" "${HEAD_FILE}" COPYONLY)
 
 	set(${_refspecvar} "${HEAD_REF}" PARENT_SCOPE)
 	set(${_hashvar} "${HEAD_HASH}" PARENT_SCOPE)
