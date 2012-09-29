@@ -4,6 +4,7 @@ build
 *~
 CMakeLists.txt.user
 .kdev4
+*.kdev*
 *.pyc
 global.hpp
 tests/cmake/*
