@@ -1,7 +1,7 @@
 Installing SpeechControl
 =================
 
-0. For the Impatient
+0. For the Impatient (TL;DR)
 
     # apt-get install cmake libqt4-dev libqtgstreamer-dev libpocketsphinx-dev libsphinxbase-dev libxdo-dev gstreamer0.10-pocketsphinx pkg-config libhunspell-dev libphonon-dev
     $ mkdir build && cd build
@@ -10,7 +10,7 @@ Installing SpeechControl
 
 You can run SpeechControl by invoking (while still in the build directory)
 
-    # src/app/speechcontrol
+    $ src/app/speechcontrol
 
 1. Required Packages
 
@@ -18,7 +18,7 @@ SpeechControl's core requires that you have the following packages installed:
 
     * CMake 2.8
       # apt-get install cmake
-      # apt-get install cmake-qt-gui        # Install for a graphical interfaces
+      # apt-get install cmake-qt-gui        // Install for a graphical interfaces
 
     * Qt 4.7.2 (or higher), Phonon and its development files
       # apt-get install libqt4-dev libphonon-dev
