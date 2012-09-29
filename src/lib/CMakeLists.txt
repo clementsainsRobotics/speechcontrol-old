@@ -63,4 +63,9 @@ install(DIRECTORY   "${CMAKE_CURRENT_SOURCE_DIR}/"
         COMPONENT "dev"
         FILES_MATCHING
             PATTERN "*.hpp"
+            PATTERN "speechcontrol.hpp" EXCLUDE
             PATTERN "cmake"   EXCLUDE)
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/speechcontrol.hpp"
+        DESTINATION "${SPCHCNTRL_INCLUDE_DIR}"
+        COMPONENT "dev")
