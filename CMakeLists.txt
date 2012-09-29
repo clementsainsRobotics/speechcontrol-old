@@ -43,7 +43,7 @@ add_subdirectory(res)
 add_subdirectory(src)
 
 if(WITH_TESTS)
-    add_subdirectory(tests)
+#     add_subdirectory(tests)
 endif()
 
 if(WITH_DOCS)
