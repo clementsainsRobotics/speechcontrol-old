@@ -19,15 +19,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef SPEECHCONTROL_LIB
-#define SPEECHCONTROL_LIB
-
-#include <lib/global.hpp>
-#include <lib/decoder.hpp>
-#include <lib/languagemodel.hpp>
-#include <lib/acousticmodel.hpp>
-#include <lib/dictionary.hpp>
-#include <lib/noisedictionary.hpp>
+#ifndef SPEECHCONTROL_LIBRARY
+#define SPEECHCONTROL_LIBRARY
 
 /**
  * @author Jacky Alciné <jacky.alcine@thesii.org>
@@ -43,5 +36,12 @@
  * designed to make your developing life a bit easier to have with some of the
  * magic tools of speech recognition and computation that's involved with it.
  */
+
+#include <lib/global.hpp>
+#include <lib/decoder.hpp>
+#include <lib/languagemodel.hpp>
+#include <lib/acousticmodel.hpp>
+#include <lib/dictionary.hpp>
+#include <lib/noisedictionary.hpp>
 
 #endif /* SPEECHCONTROL_LIB */
