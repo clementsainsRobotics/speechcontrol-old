@@ -2,7 +2,7 @@ project(SpeechControlLibrary)
 cmake_minimum_required(VERSION 2.8)
 
 ## setting up sources
-file(GLOB_RECURSE SPCHCNTRL_LIB_SRCS "*.cpp" "*.cxx")
+file(GLOB_RECURSE SPCHCNTRL_LIB_SRCS "*.cpp")
 
 ## variables
 set(SPCHCNTRL_LIB_MAJOR_VERSION 0)
