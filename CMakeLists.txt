@@ -8,7 +8,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 # option(WITH_PYTHON_BINDINGS    "Generate Python support for SpeechControl?" OFF)
 # option(WITH_PLUGINS            "Build the included plug-ins?"               OFF)
 option(WITH_DOCS               "Generate Doxygen-made documentation?"       OFF)
-# option(WITH_TESTS              "Generate the test build system?"            OFF)
+option(WITH_TESTS              "Generate the test build system?"            OFF)
 
 ## Required packages
 find_package(PkgConfig 0.2 REQUIRED)
@@ -42,10 +42,6 @@ add_subdirectory(cmake)
 add_subdirectory(res)
 add_subdirectory(src)
 
-if(WITH_TESTS)
-#     add_subdirectory(tests)
-endif()
-
 if(WITH_DOCS)
     add_subdirectory(doc)
-endif()
+endif(WITH_DOCS)
