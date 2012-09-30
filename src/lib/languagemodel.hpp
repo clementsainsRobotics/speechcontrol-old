@@ -67,32 +67,43 @@ public:
      * @brief Obtains a language model from a directory.
      *
      * @param p_directory Path to the language model.
+     * @return Obtains a LanguageModel if found, null otherwise.
      **/
     static LanguageModel* fromDirectory (const QDir& p_directory);
 
     /**
      * @brief Obtains all of the known language models.
+     *
+     * @return A list of LanguageModel objects that are discoverable in the platform.
      **/
     static LanguageModelList allModels();
 
     /**
      * @brief Obtains the directory that holds this language model.
+     *
+     * @return Obtain the path of the language model.
      **/
     QString path() const;
 
     /**
      * @brief Determines if this model is a system language model.
+     *
+     * @return True if this is a system model, false otherwise.
      **/
     bool isSystem() const;
 
     /**
      * @brief Determines if this model is a user language model.
+     *
+     * @return True if this is a user model, false otherwise.
      **/
     bool isUser() const;
 
     /**
      * @brief Obtains the name of this language model.
+     * 
      * @note This value is not human-friendly.
+     * @return Returns the 
      **/
     QString name() const;
 

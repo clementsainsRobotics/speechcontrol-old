@@ -39,21 +39,21 @@ using SpeechControl::AcousticModelPrivate;
 using SpeechControl::NoiseDictionary;
 using SpeechControl::AcousticModelList;
 
-void cloneDirectory (QDir p_base, QDir p_newDir)
+void cloneDirectory (QDir base, QDir newDir)
 {
-    QStringList entries = p_base.entryList (QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
+    QStringList entries = base.entryList (QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files);
 
     Q_FOREACH (const QString entry, entries) {
         QFileInfo entryInfo (entry);
 
         if (entryInfo.isDir()) {
-            p_base.mkpath (p_newDir.absolutePath() + "/" + entryInfo.baseName());
+            base.mkpath (newDir.absolutePath() + "/" + entryInfo.baseName());
             qDebug() << "[cloneDirectory()] Descending into " << entryInfo.absolutePath();
-            cloneDirectory (QDir (entryInfo.absolutePath()), QDir (p_newDir.absolutePath() + "/" + entryInfo.baseName()));
+            cloneDirectory (QDir (entryInfo.absolutePath()), QDir (newDir.absolutePath() + "/" + entryInfo.baseName()));
         }
         else {
-            QString fileBase = p_base.absoluteFilePath (entry);
-            QString fileNew = p_newDir.absoluteFilePath (entryInfo.fileName());
+            QString fileBase = base.absoluteFilePath (entry);
+            QString fileNew = newDir.absoluteFilePath (entryInfo.fileName());
             qDebug() << "[cloneDirectory()] Copying" << fileBase << "to" << fileNew << "..";
             QFile::copy (fileBase, fileNew);
         }

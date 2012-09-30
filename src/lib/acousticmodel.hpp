@@ -82,16 +82,16 @@ public:
 
     /**
      * @brief Constructor.
-     * @param p_parent Defaults to 0.
+     * @param parent Defaults to 0.
      **/
-    explicit AcousticModel (QObject* p_parent = 0);
+    explicit AcousticModel (QObject* parent = 0);
 
     /**
      * @brief Constructor.
-     * @param p_path The path to the acoustic model.
-     * @param p_parent Defaults to 0.
+     * @param path The path to the acoustic model.
+     * @param parent Defaults to 0.
      **/
-    AcousticModel (QString const& p_path, QObject* p_parent = 0);
+    AcousticModel (QString const& path, QObject* parent = 0);
 
     /**
      * @brief Sets a paramater within the acoustic model.
@@ -99,7 +99,7 @@ public:
      * @param p_key The key to change.
      * @param p_value The new value of the key to change.
      **/
-    void setParameter (const QString& p_key , const QVariant& p_value);
+    void setParameter (const QString& key , const QVariant& value);
 
     /**
      * @brief Sets an array of parameters within the acoustic model.
