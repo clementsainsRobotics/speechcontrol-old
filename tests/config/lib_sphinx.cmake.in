@@ -1,3 +1,0 @@
-## Special includes
-set(PATH_TO_SAMPLE "${CMAKE_SOURCE_DIR}/tests/data/dante.ogg")
-file(WRITE "${PROJECT_BINARY_DIR}/config_sphinx.hpp" "#define AUDIO \"${PATH_TO_SAMPLE}\"")

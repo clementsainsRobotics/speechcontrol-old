@@ -1,3 +1,0 @@
-## Special includes
-set(PATH_TO_SAMPLE "${CMAKE_SOURCE_DIR}/tests/data/dante.ogg")
-list(APPEND TEST_COMPILE_DEFINITIONS "AUDIO=${PATH_TO_SAMPLE}")
