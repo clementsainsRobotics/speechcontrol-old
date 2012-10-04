@@ -50,6 +50,16 @@ QString LanguageModel::name() const
     return dir.dirName();
 }
 
+QString LanguageModel::internalName() const
+{
+    return QString::null;
+}
+
+ngram_model_t* LanguageModel::ngram() const
+{
+    return 0;
+}
+
 bool LanguageModel::isSystem() const
 {
     return !isUser();
