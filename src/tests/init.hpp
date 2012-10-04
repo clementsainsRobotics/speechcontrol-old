@@ -18,15 +18,16 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef LINKING_HPP
-#define LINKING_HPP
+#ifndef SPCHCNTRL_TEST_INIT_HPP
+#define SPCHCNTRL_TEST_INIT_HPP
 #include <QObject>
 
-class TestLinking : public QObject {
+class TestInitialization : public QObject {
     Q_OBJECT
 
 private slots:
-    void toUpper();
+ void createDecoder();
+ void destroyDecoder();
 };
 
 #endif /* LINKING_HPP */

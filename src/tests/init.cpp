@@ -19,14 +19,18 @@
  */
 
 #include <QtTest/QtTest>
-#include "linking.hpp"
+#include <lib/decoder.hpp>
+#include "init.hpp"
 
-void TestLinking::toUpper()
-{
-    QString str = "Hello";
-    QVERIFY(str.toUpper() == "HELLO");
+void TestInitialization::createDecoder(){
+ SpeechControl::Decoder* decoder = new SpeechControl::Decoder();
+
+ QVERIFY(decoder != 0);
 }
 
+void TestInitialization::destroyDecoder(){
+ 
+}
 
-QTEST_MAIN(TestLinking)
-#include "linking.moc"
+QTEST_MAIN(TestInitialization)
+#include "init.moc"
