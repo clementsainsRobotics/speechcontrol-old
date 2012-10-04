@@ -7,7 +7,9 @@ project(SpchCntrlTest-@_Template_Id@)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 ## Add paths to find CMake information about the library and application.
-#find_package(SpeechControlLibrary)
+set(SpeechControlLibrary_DIR "${CMAKE_BINARY_DIR}/src/lib/InstallFiles")
+message(STATUS ${SpeechControlLibrary_DIR})
+find_package(SpeechControlLibrary)
 
 ## Variables
 set(@_Template_Id@_SOURCES "@_Sources@")
