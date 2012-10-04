@@ -1,0 +1,1 @@
+from speechcontrol cimport *

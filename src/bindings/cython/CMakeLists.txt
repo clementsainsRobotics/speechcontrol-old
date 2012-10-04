@@ -8,9 +8,13 @@ INCLUDE_DIRECTORIES(
 # https://github.com/OpenKinect/libfreenect/blob/master/wrappers/python/CMakeLists.txt
 
 # How to Cython the .pyx file
+set(CYTHON_INCLUDE_DIRS 
+    "${PROJECT_SOURCE_DIR}/src"
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 add_custom_command(OUTPUT libspeechcontrol/speechcontrol.cpp
   COMMAND
-  ${CYTHON_EXECUTABLE} -o libspeechcontrol/speechcontrol.cpp -f -I ${CMAKE_CURRENT_SOURCE_DIR} --cplus "${CMAKE_CURRENT_SOURCE_DIR}/libspeechcontrol/speechcontrol.pyx"
+  ${CYTHON_EXECUTABLE} -o libspeechcontrol/speechcontrol.cpp -f -I ${CYTHON_INCLUDE_DIRS} --cplus "${CMAKE_CURRENT_SOURCE_DIR}/libspeechcontrol/speechcontrol.pyx"
   DEPENDS "libspeechcontrol/speechcontrol.pyx"
 )
 
