@@ -8,7 +8,7 @@ INCLUDE_DIRECTORIES(
 # https://github.com/OpenKinect/libfreenect/blob/master/wrappers/python/CMakeLists.txt
 
 # How to Cython the .pyx file
-set(CYTHON_INCLUDE_DIRS 
+set(CYTHON_INCLUDE_DIRS
     "${PROJECT_SOURCE_DIR}/src"
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
