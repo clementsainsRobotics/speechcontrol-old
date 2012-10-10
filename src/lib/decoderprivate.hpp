@@ -18,8 +18,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef SPCHCNTRL_LIB_SPHINX_ABSTRACT_HXX_
-#define SPCHCNTRL_LIB_SPHINX_ABSTRACT_HXX_
+#ifndef SPCHCNTRL_LIB_DECODER_ABSTRACT_HXX_
+#define SPCHCNTRL_LIB_DECODER_ABSTRACT_HXX_
 
 #include <pocketsphinx.h>
 #include <lib/decoder.hpp>

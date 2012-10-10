@@ -32,6 +32,7 @@
 #include <QObject>
 
 #include <lib/global.hpp>
+#include <lib/export.hpp>
 
 #include <ngram_model.h>
 
@@ -44,7 +45,7 @@ typedef QList<LanguageModel*> LanguageModelList;
 /**
  * @brief Represents a language model in its programmatic format.
  **/
-class LanguageModel : public QObject
+class SPCH_EXPORT LanguageModel : public QObject
 {
     Q_OBJECT
     Q_PROPERTY (QString Path READ path)     ///< The path to the language mode, be it a directory or file.
@@ -102,6 +103,7 @@ public:
      * @brief Erases this LanguageModel.
      **/
     void erase();
+    
     ngram_model_t* ngram() const;
     QString internalName() const;
 };

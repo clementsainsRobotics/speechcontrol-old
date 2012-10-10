@@ -27,7 +27,8 @@
 
 using namespace SpeechControl;
 
-LanguageModel::LanguageModel (QObject* p_parent) : QObject (p_parent), d_ptr (new LanguageModelPrivate)
+LanguageModel::LanguageModel (QObject* p_parent) :
+    QObject (p_parent), d_ptr (new LanguageModelPrivate(this))
 {
 
 }

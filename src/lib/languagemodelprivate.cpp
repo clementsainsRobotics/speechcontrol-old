@@ -1,7 +1,7 @@
 /***
  *  This file is part of SpeechControl.
  *
- *  Copyright (C) 2012 Jacky Alcine <jacky.alcine@thesii.org>
+ *  Copyright (C) 2012 Jacky Alciné <jackyalcine@gmail.com>
  *
  *  SpeechControl is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -14,23 +14,16 @@
  *  Library General Public License for more details.
  *
  *  You should have received a copy of the GNU Library General Public License
- *  along with SpeechControl .  If not, write to the Free Software Foundation, Inc.,
+ *  along with SpeechControl.  If not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QtTest/QtTest>
-#include <lib/decoder.hpp>
-#include "init.hpp"
+#include "lib/languagemodelprivate.hpp"
 
-void TestInitialization::createDecoder(){
- SpeechControl::Decoder* decoder = new SpeechControl::Decoder();
+using namespace SpeechControl;
 
- QVERIFY(decoder != 0);
+LanguageModelPrivate::LanguageModelPrivate(LanguageModel* p_qPtr)
+    : q_ptr(p_qPtr)
+{
+
 }
-
-void TestInitialization::destroyDecoder(){
- SpeechControl::Decoder* decoder = new SpeechControl::Decoder();
-}
-
-QTEST_MAIN(TestInitialization)
-#include "init.moc"

@@ -55,9 +55,11 @@ void DecoderPrivate::updateDecoder(){
     if (decoder){
         ps_free(decoder);
         decoder = 0;
+    } else {
+        decoder = ps_init(config);
     }
     
-    decoder = ps_init(config);
+    ps_reinit(decoder,config);
 }
 
 DecoderPrivate::~DecoderPrivate(){
