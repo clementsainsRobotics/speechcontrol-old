@@ -103,8 +103,15 @@ public:
      * @brief Erases this LanguageModel.
      **/
     void erase();
-    
+
+    /**
+     * @brief Obtains the raw LanguageModel object.
+     */
     ngram_model_t* ngram() const;
+
+    /**
+     * @brief Obtains the internal name of the language model.
+     */
     QString internalName() const;
 };
 

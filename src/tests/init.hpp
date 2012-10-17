@@ -21,6 +21,7 @@
 #ifndef SPCHCNTRL_TEST_INIT_HPP
 #define SPCHCNTRL_TEST_INIT_HPP
 #include <QObject>
+#include <lib/decoder.hpp>
 
 class TestInitialization : public QObject {
     Q_OBJECT
@@ -28,6 +29,9 @@ class TestInitialization : public QObject {
 private slots:
  void createDecoder();
  void destroyDecoder();
+
+private:
+ SpeechControl::Decoder* decoder;
 };
 
 #endif /* LINKING_HPP */

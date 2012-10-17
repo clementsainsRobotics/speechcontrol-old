@@ -66,6 +66,7 @@ public:
     LanguageModel* languageModel() const;
     Dictionary* dictionary() const;
     AcousticModel* acousticModel() const;
+    bool isConfigured() const;
     void setLanguageModel (const QString& p_path);
     void setLanguageModel (const LanguageModel* p_languageModel);
     void setDictionary (const QString& p_path);

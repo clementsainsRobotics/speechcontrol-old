@@ -23,13 +23,14 @@
 #include "init.hpp"
 
 void TestInitialization::createDecoder(){
- SpeechControl::Decoder* decoder = new SpeechControl::Decoder();
-
- QVERIFY(decoder != 0);
+ decoder = new SpeechControl::Decoder();
+ QVERIFY2(decoder->isConfigured() == true,"The decoder was configured.");
 }
 
 void TestInitialization::destroyDecoder(){
- SpeechControl::Decoder* decoder = new SpeechControl::Decoder();
+ decoder->deleteLater();
+
+ QVERIFY(decoder == 0);
 }
 
 QTEST_MAIN(TestInitialization)

@@ -18,6 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#include "lib/global.hpp"
 #include "lib/decoderprivate.hpp"
 #include <QStringList>
 
@@ -27,7 +28,14 @@ DecoderPrivate::DecoderPrivate (Decoder* p_qPtr) :
     config(0), decoder(0), languageModel(0),
     acousticModel(0), dictionary(0), q_ptr(p_qPtr)
 {
-    config = cmd_ln_init(NULL,ps_args(),FALSE,NULL);
+    // @todo Obtain the default model and dictionary as specified by configuration.
+    // @todo Also provide a failsafe if this check fails.
+    config = cmd_ln_init(NULL, ps_args(), FALSE,
+                         "-hmm", POCKETSPHINX_MODELDIR "/hmm/en_US/hub4wsj_sc_8k",
+                         "-lm", POCKETSPHINX_MODELDIR "/lm/en/turtle.DMP",
+                         "-dict", POCKETSPHINX_MODELDIR "/lm/en/turtle.dic",
+                NULL);
+
     updateDecoder();
 }
 
@@ -45,21 +53,19 @@ void DecoderPrivate::updateConfiguration(const QMap< QString, QString >& p_args)
     for (ushort i = 0; i < args.count(); i++){
         arg = args.at(i);
         value = p_args.value(arg);
-        config = cmd_ln_init(config,ps_args(),FALSE,
+        config = cmd_ln_init(config,ps_args(),TRUE,
                              arg.toStdString().c_str(),
-                             value.toStdString().c_str());
+                             value.toStdString().c_str(),NULL);
     }
 }
 
 void DecoderPrivate::updateDecoder(){
     if (decoder){
         ps_free(decoder);
-        decoder = 0;
+        ps_reinit(decoder,config);
     } else {
         decoder = ps_init(config);
     }
-    
-    ps_reinit(decoder,config);
 }
 
 DecoderPrivate::~DecoderPrivate(){

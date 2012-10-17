@@ -47,6 +47,12 @@ Decoder::Decoder (const Decoder& p_other) :
 
 }
 
+bool Decoder::isConfigured() const
+{
+    Q_D(const Decoder);
+    return (d->config != NULL && d->dictionary != NULL);
+}
+
 LanguageModel* Decoder::languageModel() const
 {
     Q_D (const Decoder);
