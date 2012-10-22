@@ -1,5 +1,3 @@
-from speechcontrol cimport *
-
 cdef class AcousticModel:
     cdef C_AcousticModel *cSelf
 
@@ -9,5 +7,5 @@ cdef class AcousticModel:
     def __dealloc__(self):
         del self.cSelf
 
-    def setParameter(self, name, value):
+    def setParameter(self, char *name, char *value):
         self.cSelf.setParameter(QString(name), QVariant(value))
