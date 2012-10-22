@@ -1,3 +1,5 @@
+from libcpp cimport string
+
 cdef extern from "<QObject>":
     cdef cppclass QObject:
         QObject()
@@ -5,9 +7,9 @@ cdef extern from "<QObject>":
 cdef extern from "<QString>":
     cdef cppclass QString:
         QString()
-        QString(QObject*)
 
-        QString(unicode)
+        QString(char *)
+        QString(string)
 
 cdef extern from "<QList>":
     cdef cppclass QList[T]:
@@ -19,14 +21,12 @@ cdef extern from "<QMap>":
 
 cdef extern from "<QVariant>":
     cdef cppclass QVariant:
-        QVariant(QString)
-
         QVariant(int)
         QVariant(bint)
-        QVariant(unicode)
+        QVariant(char *)
 
-        QString toString()
         int     toInt()
         bint    toBool()
+        QString toString()
 
 #typedef QVariantMap QMap[QString, QVariant]
