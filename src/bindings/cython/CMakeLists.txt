@@ -2,9 +2,9 @@ find_package(PythonLibs REQUIRED)
 
 INCLUDE_DIRECTORIES(
     ${PYTHON_INCLUDE_PATH}
-    ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR}/src
+    ${SPCHCNTRL_INCLUDE_DIRS}
 )
 
 # Use this as a guide:
