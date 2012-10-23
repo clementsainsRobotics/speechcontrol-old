@@ -50,6 +50,11 @@ QString LanguageModel::name() const
     return dir.dirName();
 }
 
+QString LanguageModel::internalName() const
+{
+    return QString();
+}
+
 bool LanguageModel::isSystem() const
 {
     return !isUser();

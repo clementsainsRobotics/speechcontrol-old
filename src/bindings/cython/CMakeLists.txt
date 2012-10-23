@@ -31,8 +31,9 @@ ADD_LIBRARY(speechcontrol_cython SHARED
     speechcontrol.cpp
 )
 
-#TARGET_LINK_LIBRARIES(speechcontrol_cython
-#)
+TARGET_LINK_LIBRARIES(speechcontrol_cython
+    speechcontrol
+)
 
 SET_TARGET_PROPERTIES(speechcontrol_cython PROPERTIES
     PREFIX ""
