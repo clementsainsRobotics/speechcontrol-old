@@ -77,4 +77,4 @@ public:
 }
 
 #endif // ABSTRACTSPHINX_HPP
-// kate: indent-mode cstyle; replace-tabs on; 
+// kate: indent-mode cstyle; replace-tabs on;

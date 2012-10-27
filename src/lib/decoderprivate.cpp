@@ -18,7 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "lib/decoderprivate.hpp"
+#include <lib/decoderprivate.hpp>
 #include <QStringList>
 
 using namespace SpeechControl;
@@ -27,7 +27,7 @@ DecoderPrivate::DecoderPrivate (Decoder* p_qPtr) :
     config(0), decoder(0), languageModel(0),
     acousticModel(0), dictionary(0), q_ptr(p_qPtr)
 {
-    config = cmd_ln_init(NULL,ps_args(),FALSE,NULL);
+    config = cmd_ln_init(NULL, ps_args(), FALSE, NULL);
     updateDecoder();
 }
 
@@ -42,7 +42,7 @@ void DecoderPrivate::updateConfiguration(const QMap< QString, QString >& p_args)
     // Since we can't just expand the name, we'll do this...
     QString arg, value;
     QStringList args = p_args.keys();
-    for (ushort i = 0; i < args.count(); i++){
+    for (ushort i = 0; i < args.count(); i++) {
         arg = args.at(i);
         value = p_args.value(arg);
         config = cmd_ln_init(config,ps_args(),FALSE,
@@ -51,18 +51,18 @@ void DecoderPrivate::updateConfiguration(const QMap< QString, QString >& p_args)
     }
 }
 
-void DecoderPrivate::updateDecoder(){
-    if (decoder){
+void DecoderPrivate::updateDecoder() {
+    if (decoder) {
         ps_free(decoder);
         decoder = 0;
     }
-    
+
     decoder = ps_init(config);
 }
 
-DecoderPrivate::~DecoderPrivate(){
+DecoderPrivate::~DecoderPrivate() {
     ps_free(decoder);
     cmd_ln_free_r(config);
 }
 
-// kate: indent-mode cstyle; replace-tabs on; 
+// kate: indent-mode cstyle; replace-tabs on;
