@@ -33,3 +33,9 @@ cdef class Decoder:
 
     def setLanguageModel(self, char *path):
         self.cSelf.setLanguageModel(QString(path))
+
+    def setAcousticModel(self, AcousticModel model):
+        self.cSelf.setAcousticModel(model.cSelf)
+
+    def setLanguageModel(self, LanguageModel model):
+        self.cSelf.setLanguageModel(model.cSelf)
