@@ -68,7 +68,7 @@ AcousticModel* Decoder::acousticModel() const
 void Decoder::setLanguageModel (const QString& p_path)
 {
     Q_D (Decoder);
-    
+
     if (QFile::exists (p_path)) {
         d->languageModel = LanguageModel::fromDirectory(p_path);
         ngram_model_t* ngram_model = ps_get_lmset(d->decoder);
@@ -89,7 +89,7 @@ void Decoder::setLanguageModel (const LanguageModel* p_languageModel)
 void Decoder::setDictionary (const QString& p_path)
 {
     Q_D (Decoder);
-    
+
     if (QFile::exists (p_path)) {
         d->dictionary = Dictionary::obtainFromPath(p_path);
     }
@@ -108,7 +108,7 @@ void Decoder::setDictionary (const Dictionary* p_dictionary)
 void Decoder::setAcousticModel (const QString& p_path)
 {
     Q_D (Decoder);
-    
+
     if (QFile::exists (p_path)) {
         d->acousticModel = new AcousticModel(p_path,this);
     }
