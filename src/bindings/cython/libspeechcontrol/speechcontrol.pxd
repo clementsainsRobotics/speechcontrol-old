@@ -13,7 +13,7 @@ cdef extern from "<lib/acousticmodel.hpp>" namespace "SpeechControl":
         int sampleRate()
 
         QString path()
-        
+
         bint isValid()
         bint isSystem()
         bint isUser()
@@ -38,11 +38,12 @@ cdef extern from "<lib/languagemodel.hpp>" namespace "SpeechControl::LanguageMod
     C_LanguageModel* fromDirectory(QDir)
 
 cdef extern from "<lib/decoder.hpp>" namespace "SpeechControl":
-    C_LanguageModel* languageModel()
-    C_AcousticModel* acousticModel()
+    cdef cppclass C_Decoder "SpeechControl::Decoder":
+        C_LanguageModel* languageModel()
+        C_AcousticModel* acousticModel()
 
-    void setLanguageModel(QString)
-    void setLanguageModel(C_LanguageModel *)
+        void setLanguageModel(QString)
+        void setLanguageModel(C_LanguageModel *)
 
-    void setAcousticModel(QString)
-    void setAcousticModel(C_AcousticModel *)
+        void setAcousticModel(QString)
+        void setAcousticModel(C_AcousticModel *)
