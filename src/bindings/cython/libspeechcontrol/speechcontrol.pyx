@@ -19,6 +19,24 @@ cdef class LanguageModel:
     def __dealloc__(self):
         del self.cSelf
 
+cdef class Dictionary:
+    cdef C_Dictionary *cSelf
+
+    def __cinit__(self):
+        self.cSelf = new C_Dictionary(QString(""))
+
+    def __dealloc__(self):
+        del self.cSelf
+
+#cdef class NoiseDictionary:
+#    cdef C_NoiseDictionary *cSelf
+#
+#    def __cinit__(self):
+#        self.cSelf = new C_NoiseDictionary()
+#
+#    def __dealloc__(self):
+#        del self.cSelf
+
 cdef class Decoder:
     cdef C_Decoder *cSelf
 

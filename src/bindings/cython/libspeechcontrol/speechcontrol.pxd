@@ -59,7 +59,7 @@ cdef extern from "<lib/dictionary.hpp>" namespace "SpeechControl::Dictionary":
 
 cdef extern from "<lib/noisedictionary.hpp>" namespace "SpeechControl":
     cdef cppclass C_NoiseDictionary "SpeechControl::NoiseDictionary":
-        C_NoiseDictionary(QObject)
+        C_NoiseDictionary(QObject=*)
 
 cdef extern from "<lib/noisedictionary.hpp>" namespace "SpeechControl::NoiseDictionary":
     C_NoiseDictionary* fromFile(QFile *)
