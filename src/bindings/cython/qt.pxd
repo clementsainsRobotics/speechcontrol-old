@@ -30,3 +30,7 @@ cdef extern from "<QVariant>":
         QString toString()
 
 #typedef QVariantMap QMap[QString, QVariant]
+
+cdef extern from "<QFile>":
+    cdef cppclass QFile:
+        QFile(QString)

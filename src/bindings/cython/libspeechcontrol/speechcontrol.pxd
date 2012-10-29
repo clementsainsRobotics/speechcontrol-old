@@ -47,3 +47,19 @@ cdef extern from "<lib/decoder.hpp>" namespace "SpeechControl":
 
         void setAcousticModel(QString)
         void setAcousticModel(C_AcousticModel *)
+
+cdef extern from "<lib/dictionary.hpp>" namespace "SpeechControl":
+    cdef cppclass C_Dictionary "SpeechControl::Dictionary":
+        C_Dictionary(QString)
+
+cdef extern from "<lib/dictionary.hpp>" namespace "SpeechControl::Dictionary":
+    C_Dictionary* obtain(QString)
+    C_Dictionary* obtainFromPath(QString)
+    C_Dictionary* create(QList[QString], QString)
+
+cdef extern from "<lib/noisedictionary.hpp>" namespace "SpeechControl":
+    cdef cppclass C_NoiseDictionary "SpeechControl::NoiseDictionary":
+        C_NoiseDictionary(QObject)
+
+cdef extern from "<lib/noisedictionary.hpp>" namespace "SpeechControl::NoiseDictionary":
+    C_NoiseDictionary* fromFile(QFile *)
