@@ -34,3 +34,7 @@ cdef extern from "<QVariant>":
 cdef extern from "<QFile>":
     cdef cppclass QFile:
         QFile(QString)
+
+cdef extern from "<QDir>":
+    cdef cppclass QDir:
+        QDir(QString=*)
