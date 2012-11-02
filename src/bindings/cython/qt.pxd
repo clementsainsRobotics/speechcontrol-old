@@ -37,4 +37,4 @@ cdef extern from "<QFile>":
 
 cdef extern from "<QDir>":
     cdef cppclass QDir:
-        QDir(QString=*)
+        QDir(QString)
