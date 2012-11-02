@@ -18,8 +18,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef ACOUSTICMODEL_HPP
-#define ACOUSTICMODEL_HPP
+#ifndef SPCHCNTRL_ACOUSTICMODEL_HPP
+#define SPCHCNTRL_ACOUSTICMODEL_HPP
 
 #include <QObject>
 #include <QVariant>
@@ -173,7 +173,7 @@ public:
     /**
      * @brief Duplicates the data of this AcousticModel.
      **/
-    AcousticModel* new_model();
+    AcousticModel* clone();
 
     /**
      * @brief Obtains a listing of all AcousticModels.
@@ -181,7 +181,7 @@ public:
      * Obtains a list of all of the system-wide and user-wide AcousticModels
      * known to SpeechControl.
      **/
-    static AcousticModelList allModels();
+    static AcousticModelList models();
 
     /**
      * @brief Obtains a file to the NoiseDictionary of this AcousticModel.
@@ -197,7 +197,7 @@ public:
      * @brief Obtains the QFile representing the binary model definitions.
      * @note This is typically found at path() + "/mdef".
      **/
-    QFile* modelDefinitions() const;
+    QFile* definitions() const;
 
     /**
      * @brief Obtains the QFile representing the mixture weights.

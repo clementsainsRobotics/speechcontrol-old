@@ -129,7 +129,7 @@ void AcousticModel::load (QString p_path)
     d_func()->loadNoiseDictionary();
 }
 
-QFile* AcousticModel::modelDefinitions() const
+QFile* AcousticModel::definitions() const
 {
     return new QFile (path() + "/mdef");
 }
@@ -229,7 +229,7 @@ NoiseDictionary* AcousticModel::noiseDictionary() const
     return d_func()->m_noisedict;
 }
 
-AcousticModel* AcousticModel::new_model()
+AcousticModel* AcousticModel::clone()
 {
     // obtain directory info.
     QDir model (path());
@@ -271,7 +271,7 @@ QStringList findAllAcousticModels (const QDir p_dir)
 }
 
 /// @todo This should find the models installed automagically installed by the user's package management system.
-AcousticModelList AcousticModel::allModels()
+AcousticModelList AcousticModel::models()
 {
     // First, find the models imported by Sphinx. They're all stored under weird
     // folder names in MODELDIR.

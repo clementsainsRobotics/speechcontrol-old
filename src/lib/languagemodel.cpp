@@ -27,7 +27,8 @@
 
 using namespace SpeechControl;
 
-LanguageModel::LanguageModel (QObject* p_parent) : QObject (p_parent), d_ptr (new LanguageModelPrivate)
+LanguageModel::LanguageModel (QObject* p_parent) :
+    QObject (p_parent), d_ptr (new LanguageModelPrivate(this))
 {
 
 }
@@ -48,6 +49,16 @@ QString LanguageModel::name() const
 {
     QDir dir (path());
     return dir.dirName();
+}
+
+QString LanguageModel::internalName() const
+{
+    return QString::null;
+}
+
+ngram_model_t* LanguageModel::ngram() const
+{
+    return 0;
 }
 
 bool LanguageModel::isSystem() const

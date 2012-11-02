@@ -2,7 +2,7 @@ project(SpeechControlLibrary)
 cmake_minimum_required(VERSION 2.8)
 
 ## setting up sources
-file(GLOB_RECURSE SPCHCNTRL_LIB_SRCS "*.cpp" "*.cxx")
+file(GLOB_RECURSE SPCHCNTRL_LIB_SRCS "*.cpp")
 
 ## variables
 set(SPCHCNTRL_LIB_MAJOR_VERSION 0)
@@ -48,8 +48,6 @@ target_link_libraries(speechcontrol ${SPCHCNTRL_LIB_LIBRARIES})
 
 include_directories(${SPCHCNTRL_LIB_BUILD_INCLUDE_DIRS})
 add_subdirectory(cmake)
-file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/sphinx")
-file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/audiosource")
 
 ## Install stuff.
 install(TARGETS speechcontrol
@@ -65,4 +63,9 @@ install(DIRECTORY   "${CMAKE_CURRENT_SOURCE_DIR}/"
         COMPONENT "dev"
         FILES_MATCHING
             PATTERN "*.hpp"
+            PATTERN "speechcontrol.hpp" EXCLUDE
             PATTERN "cmake"   EXCLUDE)
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/speechcontrol.hpp"
+        DESTINATION "${SPCHCNTRL_INCLUDE_DIR}"
+        COMPONENT "dev")
