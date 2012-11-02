@@ -23,7 +23,10 @@
 #include "init.hpp"
 
 void TestInitialization::createDecoder(){
+ QMap<QString, QString> values;
+ values.insert("-mdef",(POCKETSPHINX_MODELDIR "/hmm/wsj1/mdef"));
  decoder = new SpeechControl::Decoder();
+ decoder->setRawConfiguration(values);
  QVERIFY2(decoder->isConfigured() == true,"The decoder was configured.");
 }
 
