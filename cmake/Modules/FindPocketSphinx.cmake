@@ -3,6 +3,7 @@
 # include files and libraries are. It also determines what the name of
 # the library is. This code sets the following variables:
 #
+#  POCKETSPHINX_VERSION             - version of PocketSphinx.
 #  POCKETSPHINX_LIBRARIES           - path to the PocketSphinx library
 #  POCKETSPHINX_INCLUDE_DIRS        - path to where pocketsphinx.h is found
 #  POCKETSPHINX_MODELDIR            - path to where preinstalled models would
@@ -20,17 +21,20 @@
 # (To distribute this file outside of CMake, substitute the full
 #  License text for the above reference.)
 
+include(FindPackageHandleStandardArgs)
 
+# Import PkgConfig for variables and then search for PocketSphinx in it.
 find_package(PkgConfig QUIET)
 pkg_check_modules(PC_POCKETSPHINX pocketsphinx)
 
+# Look for the PocketSphinx headers and library.
 find_path(POCKETSPHINX_INCLUDE_DIRS pocketsphinx.h
     HINTS ${PC_POCKETSPHINX_INCLUDEDIR} ${PC_POCKETSPHINX_INCLUDE_DIRS}
     PATH_SUFFIXES pocketsphinx)
 find_library(POCKETSPHINX_LIBRARIES pocketsphinx
     HINTS ${PC_POCKETSPHINX_LIBRARY_DIRS} ${PC_POCKETSPHINX_LIBDIR})
 
-include(FindPackageHandleStandardArgs)
+# Handle detection of PocketSphinx's variables.
 find_package_handle_standard_args(PocketSphinx DEFAULT_MSG
     POCKETSPHINX_LIBRARIES POCKETSPHINX_INCLUDE_DIRS)
 
@@ -42,4 +46,5 @@ execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} pocketsphinx --variable=modeldi
                 OUTPUT_VARIABLE POCKETSPHINX_MODELDIR
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
 
+# As a finishing touch, add PocketSphinx's version.
 set(POCKETSPHINX_VERSION ${PC_POCKETSPHINX_VERSION})
