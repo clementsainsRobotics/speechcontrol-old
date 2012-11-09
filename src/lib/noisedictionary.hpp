@@ -121,4 +121,4 @@ private:
 }
 
 #endif // SPEECHCONTROL_NOISEDICTIONARY_HPP
-// kate: indent-mode cstyle; replace-tabs on; 
+// kate: indent-mode cstyle; replace-tabs on;

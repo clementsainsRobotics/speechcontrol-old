@@ -70,7 +70,7 @@ struct SPCH_EXPORT DecoderPrivate {
      * @fn updateDecoder
      *
      * Reloads the decoder with information from the configuration.
-     * 
+     *
      */
     void updateDecoder();
 
@@ -85,4 +85,4 @@ struct SPCH_EXPORT DecoderPrivate {
 }
 
 #endif /* SPCHCNTRL_LIB_AUDIOSOURCE_ABSTRACT_HXX_ */
-// kate: indent-mode cstyle; replace-tabs on; 
+// kate: indent-mode cstyle; replace-tabs on;
