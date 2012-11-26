@@ -38,10 +38,5 @@
  */
 
 #include <lib/global.hpp>
-#include <lib/decoder.hpp>
-#include <lib/languagemodel.hpp>
-#include <lib/acousticmodel.hpp>
-#include <lib/dictionary.hpp>
-#include <lib/noisedictionary.hpp>
 
 #endif /* SPEECHCONTROL_LIB */

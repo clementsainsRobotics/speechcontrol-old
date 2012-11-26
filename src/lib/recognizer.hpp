@@ -1,7 +1,7 @@
 /***
  *  This file is part of SpeechControl.
  *
- *  Copyright (C) 2012 Jacky Alciné <jackyalcine@gmail.com>
+ *  Copyright (C) 2012 Jacky Alcine <jacky.alcine@thesii.org>
  *
  *  SpeechControl is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -18,26 +18,37 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef SPCHCNTRL_LIB_EXPORT_HPP
-#define SPCHCNTRL_LIB_EXPORT_HPP
-#include <QtGlobal>
 
-// Ensure that we're exporting symbols properly to external libraries.
-#if defined(SPCH_EXPORT_SYMBOLS)
-#define SPCH_EXPORT Q_DECL_EXPORT
-#else
-#define SPCH_EXPORT Q_DECL_IMPORT
-#endif
+#ifndef SPEECHCONTROL_DESYNTHESIZER_HPP
+#define SPEECHCONTROL_DESYNTHESIZER_HPP
 
-// This define fixes a nasty compile bug. Don't believe me? Comment it out and see what happens.
-#define QTGSTREAMERUTILS_EXPORT Q_DECL_IMPORT
+#include <QObject>
+#include <QByteArray>
+#include <QDataStream>
 
-// Re-define the means of implementing private and public data.
-#undef Q_D
-#undef Q_Q
+namespace SpeechControl {
+ class Recognizer : public QObject {
+  Q_OBJECT
+  private:
+   QDataStream stream;
 
-#define Q_D(Class) Class##Private* d = (Class##Private*) d_func()
-#define Q_Q(Class) Class* q = (Class*) q_func()
+  public:
+   enum States {
+    Unknown = 0x000,
+    Active  = 0x001
+   };
 
-#endif
-// kate: indent-mode cstyle; replace-tabs on; 
+   Recognizer(QObject* parent = 0);
+   virtual ~Recognizer();
+   void setAudioSource(QByteArray& data);
+   void setAudioStream(QDataStream& dataStream);
+   void start();
+   void stop();
+
+  signals:
+   void stateChanged(Recognizer::States state);
+   void recognitionCompleted();
+   void recognitionProducedText(QString text);
+   void recognitionFailed();
+ };
+}

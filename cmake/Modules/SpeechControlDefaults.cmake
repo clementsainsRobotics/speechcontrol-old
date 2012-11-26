@@ -4,7 +4,7 @@ if (QT4_FOUND)
     include(UseQt4)
 endif(QT4_FOUND)
 
-set(SPCHCNTRL_COMPILE_FLAGS "${QTGSTREAMER_FLAGS} --std=c++0x")
+set(SPCHCNTRL_COMPILE_FLAGS "--std=c++0x")
 set(SPCHCNTRL_COMPILE_FLAGS_DEBUG "-Wall -Wextra -Wabi -Wctor-dtor-privacy -Wformat -Wunused -O0 -ggdb")
 set(SPCHCNTRL_COMPILE_DEFINITIONS ${QT_DEFINITIONS})
 set(SPCHCNTRL_CMAKE_DIR "${CMAKE_INSTALL_PREFIX}/share/cmake/SpeechControl")

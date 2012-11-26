@@ -1,7 +1,7 @@
 /***
  *  This file is part of SpeechControl.
  *
- *  Copyright (C) 2012 Jacky Alciné <jackyalcine@gmail.com>
+ *  Copyright (C) 2012 Jacky Alcine <jacky.alcine@thesii.org>
  *
  *  SpeechControl is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -14,25 +14,20 @@
  *  Library General Public License for more details.
  *
  *  You should have received a copy of the GNU Library General Public License
- *  along with SpeechControl.  If not, write to the Free Software Foundation, Inc.,
+ *  along with SpeechControl .  If not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QMap>
-#include <QString>
+#include "recognizer.hpp"
 
-class QIODevice;
+using namespace SpeechControl;
 
-namespace SpeechControl
+Recognizer::Recognizer(QObject* parent): QObject(parent), stream()
 {
 
-typedef QMap<QString, QString> QStringMap;
-struct NoiseDictionaryPrivate;
-
-struct NoiseDictionaryPrivate {
-    NoiseDictionaryPrivate() : m_entries(), m_device (0) { }
-    QStringMap m_entries;       ///< Holds the entries.
-    QIODevice* m_device;        ///< Holds the device for saving purposes.
-};
 }
-// kate: indent-mode cstyle; replace-tabs on; 
+
+void Recognizer::setAudioSource(QByteArray& data)
+{
+ stream.
+}
