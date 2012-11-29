@@ -153,8 +153,15 @@ void Session::load (const QString& p_id)
     m_elem = s_elems.value (p_id);
 
     if (m_elem && !m_elem->isNull()) {
-        setCorpus (Corpus::obtain (m_elem->attribute ("corpus")));
-        setContent (Content::obtain (m_elem->attribute ("content")));
+        Content *content = Content::obtain (m_elem->attribute ("content"));
+        Corpus *corpus   = Corpus::obtain (m_elem->attribute ("corpus"));
+
+        if (content == NULL || corpus == NULL) {
+            qDebug() << "[Session::load] Null content or corpus!";
+            return;
+        }
+        setCorpus (corpus);
+        setContent (content);
     }
     else {
         s_elems.remove (p_id);
