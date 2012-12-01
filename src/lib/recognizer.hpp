@@ -25,12 +25,15 @@
 #include <QObject>
 #include <QByteArray>
 #include <QDataStream>
+#include <QTemporaryFile>
+#include <agent.hpp>
 
 namespace SpeechControl {
  class Recognizer : public QObject {
   Q_OBJECT
   private:
-   QDataStream stream;
+   QTemporaryFile* file;
+   static QList<RecognizingAgent*> agentList;
 
   public:
    enum States {
@@ -41,9 +44,10 @@ namespace SpeechControl {
    Recognizer(QObject* parent = 0);
    virtual ~Recognizer();
    void setAudioSource(QByteArray& data);
-   void setAudioStream(QDataStream& dataStream);
-   void start();
-   void stop();
+   virtual void start();
+   virtual void stop();
+   static void registerAgent(RecognizingAgent* agent);
+   static QList<RecognizingAgent*> agents();
 
   signals:
    void stateChanged(Recognizer::States state);
@@ -52,3 +56,5 @@ namespace SpeechControl {
    void recognitionFailed();
  };
 }
+
+#endif

@@ -22,12 +22,38 @@
 
 using namespace SpeechControl;
 
-Recognizer::Recognizer(QObject* parent): QObject(parent), stream()
+Recognizer::Recognizer(QObject* parent): QObject(parent), file(new QTemporaryFile)
 {
-
+ file->open();
 }
 
 void Recognizer::setAudioSource(QByteArray& data)
 {
- stream.
+ file->close();
+ file->open();
+ file->write(data);
+}
+
+void Recognizer::start()
+{
+}
+
+void Recognizer::stop()
+{
+
+}
+
+Recognizer::~Recognizer()
+{
+
+}
+
+QList< RecognizingAgent* > Recognizer::agents()
+{
+ return agentList;
+}
+
+void Recognizer::registerAgent(RecognizingAgent* agent)
+{
+ agentList.push_back(agent);
 }
