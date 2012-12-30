@@ -22,6 +22,7 @@
 #define SPCHCNTRL_LIB_EXPORT_HPP
 #include <QtGlobal>
 
+// Ensure that we're exporting symbols properly to external libraries.
 #if defined(SPCH_EXPORT_SYMBOLS)
 #define SPCH_EXPORT Q_DECL_EXPORT
 #else
@@ -31,6 +32,7 @@
 // This define fixes a nasty compile bug. Don't believe me? Comment it out and see what happens.
 #define QTGSTREAMERUTILS_EXPORT Q_DECL_IMPORT
 
+// Re-define the means of implementing private and public data.
 #undef Q_D
 #undef Q_Q
 
