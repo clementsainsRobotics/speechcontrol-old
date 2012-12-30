@@ -19,13 +19,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QApplication>
 #include "instance.hpp"
 
-using SpeechControl::Daemon::Instance;
+using namespace SpeechControl::Daemon;
 
-int main(int argc, char** argv){
- 
- Instance* instance = new Instance();
- return 0;
+Instance::Instance()
+{
+
+}
+
+Instance::~Instance()
+{
+
 }

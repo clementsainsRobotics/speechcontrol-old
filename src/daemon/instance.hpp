@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
+ * Copyright 2012 Jacky ALcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,13 +19,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QApplication>
-#include "instance.hpp"
+#ifndef SPEECHCONTROL_DAEMON_INSTANCE_HPP
+#define SPEECHCONTROL_DAEMON_INSTANCE_HPP
 
-using SpeechControl::Daemon::Instance;
+namespace SpeechControl {
 
-int main(int argc, char** argv){
- 
- Instance* instance = new Instance();
- return 0;
+namespace Daemon {
+
+class Instance
+{
+
+public:
+Instance();
+virtual ~Instance();
+};
+
 }
+
+}
+
+#endif // SPEECHCONTROL_DAEMON_INSTANCE_HPP
