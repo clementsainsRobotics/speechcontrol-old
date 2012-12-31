@@ -19,13 +19,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QApplication>
+#include <QCoreApplication>
+#include "global.hpp"
 #include "instance.hpp"
 
 using SpeechControl::Daemon::Instance;
 
 int main(int argc, char** argv){
+ // Lemme get a QCoreApplication for 200.
+ QCoreApplication* app = new QCoreApplication(argc,argv);
  
+ // Now, grab that instance one time!
  Instance* instance = new Instance();
- return 0;
+ 
+ // Who's your momma?!
+ instance->setParent(app);
+ 
+ qDebug() << "Starting up D-Bus...";
+ 
+ instance->initializeDbus();
+ 
+ qDebug() << "D-Bus should be started.";
+ 
+ return app->exec();
 }

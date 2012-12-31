@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 2.8)
 project(SpeechControlDaemon)
 
-include_directories(${SPCHCNTRL_INCLUDE_DIRS})
+file(GLOB_RECURSE SPCHCNTRL_DAEMON_SOURCES "*.cpp")
+qt4_automoc(${SPCHCNTRL_DAEMON_SOURCES})
 
-file(GLOB SPCHCNTRL_DAEMON_SOURCES "*.cpp")
+include_directories(${SPCHCNTRL_INCLUDE_DIRS} "${CMAKE_BINARY_DIR}/src/daemon")
 configure_file("${CMAKE_SOURCE_DIR}/src/global.hpp.in" "global.hpp")
 
+
 add_executable(speechcontrold ${SPCHCNTRL_DAEMON_SOURCES})
+
+target_link_libraries(speechcontrold ${SPCHCNTRL_LIBRARIES})

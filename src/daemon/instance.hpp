@@ -22,20 +22,21 @@
 #ifndef SPEECHCONTROL_DAEMON_INSTANCE_HPP
 #define SPEECHCONTROL_DAEMON_INSTANCE_HPP
 
+#include <QObject>
+
 namespace SpeechControl {
+ namespace Daemon {
+  class Instance : public QObject
+  {
+   Q_OBJECT
+  public:
+   Instance();
+   virtual ~Instance();
+   void initializeDbus();
+  };
 
-namespace Daemon {
-
-class Instance
-{
-
-public:
-Instance();
-virtual ~Instance();
-};
-
-}
-
+ }
 }
 
 #endif // SPEECHCONTROL_DAEMON_INSTANCE_HPP
+// kate: indent-mode cstyle; indent-width 1; replace-tabs on; 

@@ -19,28 +19,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QDBusConnection>
+#include "adaptor.hpp"
 #include <QCoreApplication>
 
-#include "instance.hpp"
-#include "dbus/adaptor.hpp"
+using namespace SpeechControl::Daemon::Dbus;
 
-using namespace SpeechControl::Daemon;
+Adaptor::Adaptor() : QDBusAbstractAdaptor(QCoreApplication::instance())
+{
+ connect(QCoreApplication::instance()
+}
 
-Instance::Instance() : QObject(QCoreApplication::instance())
+void Adaptor::quit()
+{
+ QCoreApplication::quit();
+}
+
+Adaptor::~Adaptor()
 {
 
 }
 
-void Instance::initializeDbus()
-{
- Dbus::Adaptor* adaptor = new Dbus::Adaptor();;
- QDBusConnection bus = QDBusConnection::sessionBus().connectToBus(QDBusConnection::SessionBus,"/Daemon");
-}
-
-Instance::~Instance()
-{
-
-}
-
-#include "instance.moc"
+#include "adaptor.moc"

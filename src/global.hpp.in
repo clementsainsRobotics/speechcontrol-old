@@ -27,7 +27,7 @@
 #ifndef SPCHCNTRL_LIB_GLOBAL_HPP
 #define SPCHCNTRL_LIB_GLOBAL_HPP
 
-#include <export.hpp>
+#include <QDebug>
 
 /**
  * @def SPCHCNTRL_BUILD_VERSION
