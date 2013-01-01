@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2012 Jacky ALcine <jacky.alcine@thesii.org>
+ * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,29 +19,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef SPEECHCONTROL_DAEMON_INSTANCE_HPP
-#define SPEECHCONTROL_DAEMON_INSTANCE_HPP
+#include "adaptor.hpp"
+#include "../instance.hpp"
+#include <QCoreApplication>
 
-#include <QObject>
-#include <QDBusConnection>
+using SpeechControl::Daemon::Instance;
+using SpeechControl::Daemon::Dbus::Adaptor;
 
-namespace SpeechControl {
- namespace Daemon {
-  class Instance : public QObject
-  {
-   Q_OBJECT
-  public:
-   Instance();
-   virtual ~Instance();
-   void listen();
-   void initializeDbus();
-   
-  private:
-   QDBusConnection bus;
-  };
-
- }
+Adaptor::Adaptor(Instance* p_instance) : QDBusAbstractAdaptor(QCoreApplication::instance()), instance(p_instance)
+{
 }
 
-#endif // SPEECHCONTROL_DAEMON_INSTANCE_HPP
-// kate: indent-mode cstyle; indent-width 1; replace-tabs on; 
+void Adaptor::quit()
+{
+ QCoreApplication::quit();
+}
+
+void Adaptor::listen()
+{
+  instance->listen();
+}
+
+Adaptor::~Adaptor()
+{
+
+}
+
+#include "adaptor.moc"

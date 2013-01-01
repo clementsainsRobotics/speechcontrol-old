@@ -19,16 +19,37 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#include <QDebug>
+#include <QDBusConnection>
+#include <QCoreApplication>
+
 #include "instance.hpp"
+#include "dbus/adaptor.hpp"
 
 using namespace SpeechControl::Daemon;
 
-Instance::Instance()
+Instance::Instance() : QObject(QCoreApplication::instance()), bus(QDBusConnection::sessionBus())
 {
 
+}
+
+void Instance::initializeDbus()
+{
+  bus.connectToBus(QDBusConnection::SessionBus,"SpeechControl");
+  
+  Dbus::Adaptor* adaptor = new Dbus::Adaptor(this);
+  bus.registerService("org.thesii.SpeechControl");
+  bus.registerObject("/Daemon",adaptor,QDBusConnection::ExportAllContents);
+}
+
+void Instance::listen()
+{
+  qDebug() << "It's about time someone listened.";
 }
 
 Instance::~Instance()
 {
 
 }
+
+#include "instance.moc"

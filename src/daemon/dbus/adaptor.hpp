@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2012 Jacky ALcine <jacky.alcine@thesii.org>
+ * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,29 +19,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef SPEECHCONTROL_DAEMON_INSTANCE_HPP
-#define SPEECHCONTROL_DAEMON_INSTANCE_HPP
+#ifndef SPEECHCONTROL_DAEMON_DBUS_ADAPTOR_HPP
+#define SPEECHCONTROL_DAEMON_DBUS_ADAPTOR_HPP
 
-#include <QObject>
-#include <QDBusConnection>
+#include <QDBusAbstractAdaptor>
 
 namespace SpeechControl {
  namespace Daemon {
-  class Instance : public QObject
-  {
-   Q_OBJECT
-  public:
-   Instance();
-   virtual ~Instance();
-   void listen();
-   void initializeDbus();
-   
-  private:
-   QDBusConnection bus;
-  };
 
+ class Instance;
+
+  namespace Dbus {
+   
+   class Adaptor : public QDBusAbstractAdaptor
+   {
+    Q_OBJECT
+    Q_CLASSINFO("D-Bus Interface", "org.thesii.SpeechControl.Daemon")
+    
+    public:
+     Adaptor(Instance* p_instance);
+     virtual ~Adaptor();
+
+    public slots:
+      Q_NOREPLY void quit();
+      Q_NOREPLY void listen();
+      
+    signals:
+      void makeSureSomethingHappened();
+      void sendMeSomeAction(QString& p_data);
+      
+    private:
+      SpeechControl::Daemon::Instance* instance;
+   };
+  }
  }
 }
 
-#endif // SPEECHCONTROL_DAEMON_INSTANCE_HPP
-// kate: indent-mode cstyle; indent-width 1; replace-tabs on; 
+#endif // SPEECHCONTROL_DAEMON_DBUS_ADAPTOR_HPP
