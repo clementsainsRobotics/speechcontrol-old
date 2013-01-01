@@ -26,18 +26,30 @@
 
 namespace SpeechControl {
  namespace Daemon {
+
+ class Instance;
+
   namespace Dbus {
-   class Adaptor : QDBusAbstractAdaptor
+   
+   class Adaptor : public QDBusAbstractAdaptor
    {
     Q_OBJECT
     Q_CLASSINFO("D-Bus Interface", "org.thesii.SpeechControl.Daemon")
     
     public:
-     Adaptor();
+     Adaptor(Instance* p_instance);
      virtual ~Adaptor();
 
     public slots:
       Q_NOREPLY void quit();
+      Q_NOREPLY void listen();
+      
+    signals:
+      void makeSureSomethingHappened();
+      void sendMeSomeAction(QString& p_data);
+      
+    private:
+      SpeechControl::Daemon::Instance* instance;
    };
   }
  }

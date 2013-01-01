@@ -23,6 +23,7 @@
 #define SPEECHCONTROL_DAEMON_INSTANCE_HPP
 
 #include <QObject>
+#include <QDBusConnection>
 
 namespace SpeechControl {
  namespace Daemon {
@@ -32,7 +33,11 @@ namespace SpeechControl {
   public:
    Instance();
    virtual ~Instance();
+   void listen();
    void initializeDbus();
+   
+  private:
+   QDBusConnection bus;
   };
 
  }

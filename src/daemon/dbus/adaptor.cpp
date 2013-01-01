@@ -20,18 +20,24 @@
  */
 
 #include "adaptor.hpp"
+#include "../instance.hpp"
 #include <QCoreApplication>
 
-using namespace SpeechControl::Daemon::Dbus;
+using SpeechControl::Daemon::Instance;
+using SpeechControl::Daemon::Dbus::Adaptor;
 
-Adaptor::Adaptor() : QDBusAbstractAdaptor(QCoreApplication::instance())
+Adaptor::Adaptor(Instance* p_instance) : QDBusAbstractAdaptor(QCoreApplication::instance()), instance(p_instance)
 {
- connect(QCoreApplication::instance()
 }
 
 void Adaptor::quit()
 {
  QCoreApplication::quit();
+}
+
+void Adaptor::listen()
+{
+  instance->listen();
 }
 
 Adaptor::~Adaptor()
