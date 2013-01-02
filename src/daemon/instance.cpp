@@ -34,6 +34,8 @@ using SpeechControl::AbstractListener;
 Instance::Instance() : QObject(QCoreApplication::instance()), bus(QDBusConnection::sessionBus())
 {
   this->initializeDbus();
+  QStringList listeners = AbstractListener::listenerNames();
+  qDebug () << "Found" << listeners.count() << "listener(s);" << listeners;
 }
 
 void Instance::initializeDbus()

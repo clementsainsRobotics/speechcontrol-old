@@ -22,7 +22,7 @@
 #ifndef SPEECHCONTROL_LISTENERS_DUMMY_HPP
 #define SPEECHCONTROL_LISTENERS_DUMMY_HPP
 
-#include <speechcontrol/listener.hpp>
+#include <listener.hpp>
 
 namespace SpeechControl {
 

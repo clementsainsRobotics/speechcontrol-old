@@ -41,22 +41,21 @@ void AbstractListener::loadSettings()
 
 AbstractListenerList AbstractListener::listeners()
 {
-  QDir dir (SPCHCNTRL_LISTENERS_PATH);
-  dir.setFilter (QDir::Files | QDir::Readable | QDir::NoSymLinks);
-  dir.setNameFilters (QString ("*.spec").split (" "));
-  dir.setSorting (QDir::Name);
-  QStringList listenerNames = dir.entryList().replaceInStrings (".spec", "");
-  return AbstractListenerList();
+  AbstractListenerList listeners;
+  foreach (QString listener, listenerNames()){
+    listeners << AbstractListener::obtain(listener);
+  }
+  
+  return listeners;
 }
 
 QStringList AbstractListener::listenerNames()
 {
-  QStringList names;
-  foreach (AbstractListener* listener, listeners()){
-    names << listener->name();
-  }
-  
-  return names;
+  QDir dir (SPCHCNTRL_LISTENERS_PATH);
+  dir.setFilter (QDir::Files | QDir::Readable | QDir::NoSymLinks);
+  dir.setNameFilters (QString ("*.spec").split (" "));
+  dir.setSorting (QDir::Name);
+  return dir.entryList().replaceInStrings (".spec", "");
 }
 
 AbstractListener* AbstractListener::obtain(QString& listenerName)
