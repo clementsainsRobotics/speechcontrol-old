@@ -23,9 +23,15 @@
 #define SPEECHCONTROL_LISTENER_HPP
 
 #include <QObject>
-
+#include <QString>
+#include <QList>
+#include <QSettings>
 
 namespace SpeechControl {
+class AbstractListener;
+
+typedef QList<AbstractListener*> AbstractListenerList;
+
 
 class AbstractListener : public QObject
 {
@@ -37,18 +43,28 @@ public:
   virtual QString name() const = 0;
   virtual bool active() const = 0;
   
-  static QList<AbstractListener*> listeners();
+  static AbstractListenerList listeners();
+  static QStringList listenerNames();
   static bool enableListener(QString& listenerName);
   static bool disableListener(QString& listenerName);
+  static AbstractListener* obtain(QString& listenerName);
   
 public slots:
   virtual void start() = 0;
   virtual void stop() = 0;
-    
+
+protected:
+  virtual void enable();
+  virtual void disable();
+
 signals:
   void finishedListening(QString& result);
   void startedListening();
   void stoppedListening();
+  
+private:
+  QSettings* settings;
+  void loadSettings();
 };
 
 }

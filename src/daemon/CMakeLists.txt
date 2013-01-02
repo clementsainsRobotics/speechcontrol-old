@@ -6,7 +6,8 @@ include(CMakeProvideUninstallTarget)
 file(GLOB_RECURSE SPCHCNTRL_DAEMON_SOURCES "*.cpp")
 qt4_automoc(${SPCHCNTRL_DAEMON_SOURCES})
 
-include_directories(${SPCHCNTRL_INCLUDE_DIRS} "${CMAKE_BINARY_DIR}/src/daemon")
+include_directories(${SPCHCNTRL_INCLUDE_DIRS} "${CMAKE_BINARY_DIR}/src")
+include_directories(${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(speechcontrold ${SPCHCNTRL_DAEMON_SOURCES})
 

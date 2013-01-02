@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
+ * Copyright 2013 Jacky Alcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,46 +19,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "adaptor.hpp"
-#include "../instance.hpp"
-#include <QCoreApplication>
+#ifndef SPEECHCONTROL_LISTENERS_DUMMY_HPP
+#define SPEECHCONTROL_LISTENERS_DUMMY_HPP
 
-using SpeechControl::Daemon::Instance;
-using SpeechControl::Daemon::Dbus::Adaptor;
+#include <speechcontrol/listener.hpp>
 
-Adaptor::Adaptor(Instance* p_instance) : QDBusAbstractAdaptor(p_instance)
+namespace SpeechControl {
+
+namespace Listeners {
+
+class Dummy : public SpeechControl::AbstractListener
 {
-  setAutoRelaySignals(true);
-}
+public:
+    Dummy();
+    virtual ~Dummy();
 
-Instance* Adaptor::instance() const
-{
-  return qobject_cast<SpeechControl::Daemon::Instance*>(parent());
-}
-
-bool Adaptor::isListening() const
-{
-  return instance()->isListening();
-}
-
-void Adaptor::startListening()
-{
-  instance()->startListening();
-}
-
-void Adaptor::stopListening()
-{
-  instance()->stopListening();
-}
-
-QStringList Adaptor::listeners() const
-{
-  return instance()->listenerNames();
-}
-
-Adaptor::~Adaptor()
-{
+    Q_OBJECT
+public slots:
+    virtual void stop();
+    virtual void start();
+    
+public:
+    virtual bool active() const;
+    virtual QString name() const;
+};
 
 }
 
-#include "adaptor.moc"
+}
+
+#endif // SPEECHCONTROL_LISTENERS_DUMMY_HPP

@@ -51,6 +51,7 @@ namespace SpeechControl {
       Q_NOREPLY void startListening();
       Q_NOREPLY void stopListening();
       bool isListening() const;
+      QStringList listeners() const;
       
     signals:
       void stoppedListening();

@@ -45,9 +45,9 @@ void Instance::initializeDbus()
   bus.registerObject("/Daemon",adaptor,QDBusConnection::ExportAllContents);
 }
 
-QList< QString > Instance::listenerNames() const
+QStringList Instance::listenerNames() const
 {
-  return QList<QString>();
+  return AbstractListener::listenerNames();
 }
 
 bool Instance::isListening() const

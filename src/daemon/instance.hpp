@@ -23,11 +23,11 @@
 #define SPEECHCONTROL_DAEMON_INSTANCE_HPP
 
 #include <QObject>
+#include <QStringList>
 #include <QDBusConnection>
+#include "listener.hpp"
 
-namespace SpeechControl {
-
- class AbstractListener;
+namespace SpeechControl { 
  namespace Daemon {
   class Instance : public QObject
   {
@@ -39,7 +39,7 @@ namespace SpeechControl {
   public slots:
    void startListening();
    void stopListening();
-   QList<QString> listenerNames() const;
+   QStringList listenerNames() const;
    bool isListening() const;
    
   signals:
@@ -48,7 +48,7 @@ namespace SpeechControl {
    
   private:
    void initializeDbus();
-   QList<AbstractListener*> listeners;
+   AbstractListenerList listeners;
    QDBusConnection bus;
   };
 

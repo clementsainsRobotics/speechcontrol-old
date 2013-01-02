@@ -19,23 +19,75 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#include <QDir>
+#include <QStringList>
 #include "listener.hpp"
 #include "global.hpp"
 
 using SpeechControl::AbstractListener;
+using SpeechControl::AbstractListenerList;
 
-AbstractListener::AbstractListener(QObject* parent): QObject(parent)
+AbstractListener::AbstractListener(QObject* parent): QObject(parent), settings(0)
 {
-
+  loadSettings();
 }
 
-QList< AbstractListener* > AbstractListener::listeners()
+void AbstractListener::loadSettings()
+{
+  QString path = SPCHCNTRL_LISTENERS_PATH;
+  path += "/" + name() + ".spec";
+  settings = new QSettings(path);
+}
+
+AbstractListenerList AbstractListener::listeners()
 {
   QDir dir (SPCHCNTRL_LISTENERS_PATH);
   dir.setFilter (QDir::Files | QDir::Readable | QDir::NoSymLinks);
   dir.setNameFilters (QString ("*.spec").split (" "));
   dir.setSorting (QDir::Name);
-  return dir.entryList().replaceInStrings (".spec", "");
+  QStringList listenerNames = dir.entryList().replaceInStrings (".spec", "");
+  return AbstractListenerList();
+}
+
+QStringList AbstractListener::listenerNames()
+{
+  QStringList names;
+  foreach (AbstractListener* listener, listeners()){
+    names << listener->name();
+  }
+  
+  return names;
+}
+
+AbstractListener* AbstractListener::obtain(QString& listenerName)
+{
+  return 0; // for now.
+}
+
+bool AbstractListener::disableListener(QString& listenerName)
+{
+  AbstractListener* listener = AbstractListener::obtain(listenerName);
+  listener->disable();
+}
+
+bool AbstractListener::enableListener(QString& listenerName)
+{
+  AbstractListener* listener = AbstractListener::obtain(listenerName);
+  listener->enable();
+}
+
+void AbstractListener::disable()
+{
+  if (active()){
+    stop();
+  }
+  
+  settings->setValue("Listener/Enabled",false);
+}
+
+void AbstractListener::enable()
+{
+  settings->setValue("Listener/Enabled",true);
 }
 
 AbstractListener::~AbstractListener()

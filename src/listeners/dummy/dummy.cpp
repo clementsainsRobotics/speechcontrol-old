@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
+ * Copyright 2013 Jacky Alcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,46 +19,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include "adaptor.hpp"
-#include "../instance.hpp"
-#include <QCoreApplication>
+#include <QDebug>
+#include "dummy.hpp"
 
-using SpeechControl::Daemon::Instance;
-using SpeechControl::Daemon::Dbus::Adaptor;
+using SpeechControl::AbstractListener;
+using SpeechControl::Listeners::Dummy;
 
-Adaptor::Adaptor(Instance* p_instance) : QDBusAbstractAdaptor(p_instance)
+Dummy::Dummy() : AbstractListener()
 {
-  setAutoRelaySignals(true);
+  qDebug () << "Dummy listener created.";
 }
 
-Instance* Adaptor::instance() const
+void Dummy::stop()
 {
-  return qobject_cast<SpeechControl::Daemon::Instance*>(parent());
+  qDebug () << "Dummy listener stopped.";
 }
 
-bool Adaptor::isListening() const
+void Dummy::start()
 {
-  return instance()->isListening();
+  qDebug () << "Dummy listener started.";
 }
 
-void Adaptor::startListening()
+bool Dummy::active() const
 {
-  instance()->startListening();
+  return true;
 }
 
-void Adaptor::stopListening()
+QString Dummy::name() const
 {
-  instance()->stopListening();
+  return "dummy";
 }
 
-QStringList Adaptor::listeners() const
-{
-  return instance()->listenerNames();
-}
-
-Adaptor::~Adaptor()
+Dummy::~Dummy()
 {
 
 }
 
-#include "adaptor.moc"
+#include "dummy.moc"
