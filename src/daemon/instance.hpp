@@ -26,6 +26,8 @@
 #include <QDBusConnection>
 
 namespace SpeechControl {
+
+ class AbstractListener;
  namespace Daemon {
   class Instance : public QObject
   {
@@ -33,10 +35,20 @@ namespace SpeechControl {
   public:
    Instance();
    virtual ~Instance();
-   void listen();
-   void initializeDbus();
+   
+  public slots:
+   void startListening();
+   void stopListening();
+   QList<QString> listenerNames() const;
+   bool isListening() const;
+   
+  signals:
+   void startedListening();
+   void stoppedListening();
    
   private:
+   void initializeDbus();
+   QList<AbstractListener*> listeners;
    QDBusConnection bus;
   };
 

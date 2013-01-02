@@ -25,26 +25,53 @@
 
 #include "instance.hpp"
 #include "dbus/adaptor.hpp"
+#include "listener.hpp"
 
-using namespace SpeechControl::Daemon;
+using SpeechControl::Daemon::Dbus::Adaptor;
+using SpeechControl::Daemon::Instance;
+using SpeechControl::AbstractListener;
 
 Instance::Instance() : QObject(QCoreApplication::instance()), bus(QDBusConnection::sessionBus())
 {
-
+  this->initializeDbus();
 }
 
 void Instance::initializeDbus()
 {
   bus.connectToBus(QDBusConnection::SessionBus,"SpeechControl");
-  
-  Dbus::Adaptor* adaptor = new Dbus::Adaptor(this);
   bus.registerService("org.thesii.SpeechControl");
+
+  Adaptor* adaptor = new Adaptor(this);
   bus.registerObject("/Daemon",adaptor,QDBusConnection::ExportAllContents);
 }
 
-void Instance::listen()
+QList< QString > Instance::listenerNames() const
 {
-  qDebug() << "It's about time someone listened.";
+  return QList<QString>();
+}
+
+bool Instance::isListening() const
+{
+  if (this->listeners.empty()){
+    return false;
+  }
+  
+  foreach (AbstractListener* listener, this->listeners){
+    if (listener->active())
+      return true;
+  }
+  
+  return false;
+}
+
+void Instance::startListening()
+{
+
+}
+
+void Instance::stopListening()
+{
+
 }
 
 Instance::~Instance()

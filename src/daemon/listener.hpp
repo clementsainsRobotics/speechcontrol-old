@@ -19,23 +19,38 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QCoreApplication>
-#include "global.hpp"
-#include "instance.hpp"
+#ifndef SPEECHCONTROL_LISTENER_HPP
+#define SPEECHCONTROL_LISTENER_HPP
 
-using SpeechControl::Daemon::Instance;
+#include <QObject>
 
-int main(int argc, char** argv){
- // Lemme get a QCoreApplication for 200.
- QCoreApplication* app = new QCoreApplication(argc,argv);
- 
- // Now, grab that instance one time!
- Instance* instance = new Instance();
- 
- // Who's your momma?!
- instance->setParent(app);
- 
- qDebug() << "D-Bus should be started.";
- 
- return app->exec();
+
+namespace SpeechControl {
+
+class AbstractListener : public QObject
+{
+
+public:
+  explicit AbstractListener(QObject* parent = 0);
+  virtual ~AbstractListener();
+    
+  virtual QString name() const = 0;
+  virtual bool active() const = 0;
+  
+  static QList<AbstractListener*> listeners();
+  static bool enableListener(QString& listenerName);
+  static bool disableListener(QString& listenerName);
+  
+public slots:
+  virtual void start() = 0;
+  virtual void stop() = 0;
+    
+signals:
+  void finishedListening(QString& result);
+  void startedListening();
+  void stoppedListening();
+};
+
 }
+
+#endif // SPEECHCONTROL_LISTENER_HPP

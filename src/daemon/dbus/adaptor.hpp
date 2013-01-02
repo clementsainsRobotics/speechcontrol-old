@@ -31,6 +31,13 @@ namespace SpeechControl {
 
   namespace Dbus {
    
+   /**
+    * @class Adaptor
+    * @namespace SpeechControl::Daemon::Dbus
+    * 
+    * This adaptor serves as the single adaptor required for communication in
+    * order to handle the speech recognition services of SpeechControl.
+    */
    class Adaptor : public QDBusAbstractAdaptor
    {
     Q_OBJECT
@@ -41,15 +48,16 @@ namespace SpeechControl {
      virtual ~Adaptor();
 
     public slots:
-      Q_NOREPLY void quit();
-      Q_NOREPLY void listen();
+      Q_NOREPLY void startListening();
+      Q_NOREPLY void stopListening();
+      bool isListening() const;
       
     signals:
-      void makeSureSomethingHappened();
-      void sendMeSomeAction(QString& p_data);
+      void stoppedListening();
+      void startedListening();
       
     private:
-      SpeechControl::Daemon::Instance* instance;
+     Instance* instance() const;
    };
   }
  }

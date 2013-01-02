@@ -19,23 +19,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QCoreApplication>
+#include "listener.hpp"
 #include "global.hpp"
-#include "instance.hpp"
 
-using SpeechControl::Daemon::Instance;
+using SpeechControl::AbstractListener;
 
-int main(int argc, char** argv){
- // Lemme get a QCoreApplication for 200.
- QCoreApplication* app = new QCoreApplication(argc,argv);
- 
- // Now, grab that instance one time!
- Instance* instance = new Instance();
- 
- // Who's your momma?!
- instance->setParent(app);
- 
- qDebug() << "D-Bus should be started.";
- 
- return app->exec();
+AbstractListener::AbstractListener(QObject* parent): QObject(parent)
+{
+
+}
+
+QList< AbstractListener* > AbstractListener::listeners()
+{
+  QDir dir (SPCHCNTRL_LISTENERS_PATH);
+  dir.setFilter (QDir::Files | QDir::Readable | QDir::NoSymLinks);
+  dir.setNameFilters (QString ("*.spec").split (" "));
+  dir.setSorting (QDir::Name);
+  return dir.entryList().replaceInStrings (".spec", "");
+}
+
+AbstractListener::~AbstractListener()
+{
+
 }

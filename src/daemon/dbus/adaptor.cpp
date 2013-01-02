@@ -26,18 +26,29 @@
 using SpeechControl::Daemon::Instance;
 using SpeechControl::Daemon::Dbus::Adaptor;
 
-Adaptor::Adaptor(Instance* p_instance) : QDBusAbstractAdaptor(QCoreApplication::instance()), instance(p_instance)
+Adaptor::Adaptor(Instance* p_instance) : QDBusAbstractAdaptor(p_instance)
 {
+  setAutoRelaySignals(true);
 }
 
-void Adaptor::quit()
+Instance* Adaptor::instance() const
 {
- QCoreApplication::quit();
+  return qobject_cast<SpeechControl::Daemon::Instance*>(parent());
 }
 
-void Adaptor::listen()
+bool Adaptor::isListening() const
 {
-  instance->listen();
+  return instance()->isListening();
+}
+
+void Adaptor::startListening()
+{
+  instance()->startListening();
+}
+
+void Adaptor::stopListening()
+{
+  instance()->stopListening();
 }
 
 Adaptor::~Adaptor()
