@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
+ * Copyright 2013 Jacky Alcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,28 +19,40 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QCoreApplication>
-#include "global.hpp"
-#include "instance.hpp"
+#include <QDebug>
+#include "dummylistener.hpp"
 
-using SpeechControl::Daemon::Instance;
+using SpeechControl::Listeners::AbstractListener;
+using SpeechControl::Listeners::DummyListener;
 
-int main(int argc, char** argv){
-  // Just so we know who we are.
-  QCoreApplication::setOrganizationName("Synthetic Intellect Institute");
-  QCoreApplication::setOrganizationDomain("thesii.org");
-  QCoreApplication::setApplicationName("SpeechControl");
-  
-  // Lemme get a QCoreApplication for 200.
-  QCoreApplication* app = new QCoreApplication(argc,argv);
-
-  // Now, grab that instance one time!
-  Instance* instance = new Instance();
-
-  // Who's your momma?!
-  instance->setParent(app);
-
-  qDebug() << "D-Bus should be started.";
-
-  return app->exec();
+DummyListener::DummyListener() : AbstractListener()
+{
+  qDebug () << "Dummy listener created.";
 }
+
+void DummyListener::stop()
+{
+  qDebug () << "Dummy listener stopped.";
+}
+
+void DummyListener::start()
+{
+  qDebug () << "Dummy listener started.";
+}
+
+bool DummyListener::active() const
+{
+  return true;
+}
+
+QString DummyListener::name() const
+{
+  return "dummy";
+}
+
+DummyListener::~DummyListener()
+{
+
+}
+
+#include "dummylistener.moc"

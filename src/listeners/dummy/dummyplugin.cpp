@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2013 Jacky Alcine <jacky.alcine@thesii.org>
+ * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,40 +19,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QDebug>
-#include "dummy.hpp"
+#include "dummyplugin.hpp"
+#include "dummylistener.hpp"
 
-using SpeechControl::AbstractListener;
-using SpeechControl::Listeners::Dummy;
+using SpeechControl::Listeners::DummyPlugin;
+using SpeechControl::Listeners::DummyListener;
+using SpeechControl::Listeners::AbstractListener;
 
-Dummy::Dummy() : AbstractListener()
+QSettings* DummyPlugin::settings() const
 {
-  qDebug () << "Dummy listener created.";
+  return new QSettings(AbstractPlugin::settingsPath("dummy").toLocalFile());
 }
 
-void Dummy::stop()
+AbstractListener* DummyPlugin::listener() const
 {
-  qDebug () << "Dummy listener stopped.";
+  return new DummyListener;
 }
-
-void Dummy::start()
-{
-  qDebug () << "Dummy listener started.";
-}
-
-bool Dummy::active() const
-{
-  return true;
-}
-
-QString Dummy::name() const
-{
-  return "dummy";
-}
-
-Dummy::~Dummy()
-{
-
-}
-
-#include "dummy.moc"

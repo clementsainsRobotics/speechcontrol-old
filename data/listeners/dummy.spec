@@ -1,6 +1,6 @@
 [Listener]
-Enabled=false
 FriendlyName=Dummy Module
+Library=speechcontrol-listener-dummy
 
 [Authoring]
 AuthorName=Jacky Alcine

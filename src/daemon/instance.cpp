@@ -23,17 +23,20 @@
 #include <QDBusConnection>
 #include <QCoreApplication>
 
+#include "global.hpp"
 #include "instance.hpp"
 #include "dbus/adaptor.hpp"
 #include "listener.hpp"
 
 using SpeechControl::Daemon::Dbus::Adaptor;
 using SpeechControl::Daemon::Instance;
-using SpeechControl::AbstractListener;
+using SpeechControl::Listeners::AbstractListener;
 
-Instance::Instance() : QObject(QCoreApplication::instance()), bus(QDBusConnection::sessionBus())
+Instance::Instance() : QObject(QCoreApplication::instance()), bus(QDBusConnection::sessionBus()),
+ listeners(), curListener(0)
 {
   this->initializeDbus();
+  QCoreApplication::addLibraryPath(SPCHCNTRL_LISTENERS_LIB_PATH);
   QStringList listeners = AbstractListener::listenerNames();
   qDebug () << "Found" << listeners.count() << "listener(s);" << listeners;
 }
@@ -52,7 +55,7 @@ QStringList Instance::listenerNames() const
   return AbstractListener::listenerNames();
 }
 
-bool Instance::isListening() const
+bool Instance::isListening(QString& p_listenerName) const
 {
   if (this->listeners.empty()){
     return false;
@@ -66,14 +69,27 @@ bool Instance::isListening() const
   return false;
 }
 
-void Instance::startListening()
+void Instance::startListening(QString& p_listenerName)
 {
-
+  if (listener() != 0){
+    listener()->start();
+  }
+  
+  emit startedListening();
 }
 
-void Instance::stopListening()
+void Instance::stopListening(QString& p_listenerName)
 {
+  if (listener() != 0){
+    listener()->stop();
+  }
+  
+  emit stoppedListening();
+}
 
+AbstractListener* Instance::listener() const
+{
+  return curListener;
 }
 
 Instance::~Instance()

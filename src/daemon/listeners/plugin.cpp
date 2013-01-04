@@ -19,28 +19,27 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QCoreApplication>
 #include "global.hpp"
-#include "instance.hpp"
+#include "plugin.hpp"
+#include "listener.hpp"
 
-using SpeechControl::Daemon::Instance;
+using SpeechControl::Listeners::AbstractPlugin;
 
-int main(int argc, char** argv){
-  // Just so we know who we are.
-  QCoreApplication::setOrganizationName("Synthetic Intellect Institute");
-  QCoreApplication::setOrganizationDomain("thesii.org");
-  QCoreApplication::setApplicationName("SpeechControl");
-  
-  // Lemme get a QCoreApplication for 200.
-  QCoreApplication* app = new QCoreApplication(argc,argv);
+AbstractPlugin::AbstractPlugin(QObject* parent)
+{
 
-  // Now, grab that instance one time!
-  Instance* instance = new Instance();
-
-  // Who's your momma?!
-  instance->setParent(app);
-
-  qDebug() << "D-Bus should be started.";
-
-  return app->exec();
 }
+
+QUrl AbstractPlugin::settingsPath(const QString& p_listenerName)
+{
+  QString url(SPCHCNTRL_LISTENERS_PATH);
+  url += "/" + p_listenerName + ".spec";
+  return url;
+}
+
+AbstractPlugin::~AbstractPlugin()
+{
+
+}
+
+#include "plugin.moc"

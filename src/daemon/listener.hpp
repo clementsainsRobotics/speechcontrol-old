@@ -19,19 +19,21 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef SPEECHCONTROL_LISTENER_HPP
-#define SPEECHCONTROL_LISTENER_HPP
+#ifndef SPEECHCONTROL_LISTENERS_ABSTRACTLISTENER_HPP
+#define SPEECHCONTROL_LISTENERS_ABSTRACTLISTENER_HPP
 
 #include <QObject>
 #include <QString>
 #include <QList>
+#include <QHash>
 #include <QSettings>
 
 namespace SpeechControl {
+namespace Listeners {
 class AbstractListener;
 
 typedef QList<AbstractListener*> AbstractListenerList;
-
+typedef QHash<QString,AbstractListener*> AbstractListenerCollection;
 
 class AbstractListener : public QObject
 {
@@ -43,7 +45,7 @@ public:
   virtual QString name() const = 0;
   virtual bool active() const = 0;
   
-  static AbstractListenerList listeners();
+  static AbstractListenerCollection listeners();
   static QStringList listenerNames();
   static bool enableListener(QString& listenerName);
   static bool disableListener(QString& listenerName);
@@ -69,4 +71,5 @@ private:
 
 }
 
+}
 #endif // SPEECHCONTROL_LISTENER_HPP

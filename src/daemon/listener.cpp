@@ -24,8 +24,9 @@
 #include "listener.hpp"
 #include "global.hpp"
 
-using SpeechControl::AbstractListener;
-using SpeechControl::AbstractListenerList;
+using SpeechControl::Listeners::AbstractListener;
+using SpeechControl::Listeners::AbstractListenerList;
+using SpeechControl::Listeners::AbstractListenerCollection;
 
 AbstractListener::AbstractListener(QObject* parent): QObject(parent), settings(0)
 {
@@ -39,11 +40,11 @@ void AbstractListener::loadSettings()
   settings = new QSettings(path);
 }
 
-AbstractListenerList AbstractListener::listeners()
+AbstractListenerCollection AbstractListener::listeners()
 {
-  AbstractListenerList listeners;
+  AbstractListenerCollection listeners;
   foreach (QString listener, listenerNames()){
-    listeners << AbstractListener::obtain(listener);
+    listeners.insert(listener,AbstractListener::obtain(listener));
   }
   
   return listeners;
@@ -81,12 +82,14 @@ void AbstractListener::disable()
     stop();
   }
   
-  settings->setValue("Listener/Enabled",false);
+  QSettings globalSettings;
+  globalSettings.setValue("Enabled_Listeners/" + this->name(),false);
 }
 
 void AbstractListener::enable()
 {
-  settings->setValue("Listener/Enabled",true);
+  QSettings globalSettings;
+  globalSettings.setValue("Enabled_Listeners/" + this->name(),true);
 }
 
 AbstractListener::~AbstractListener()

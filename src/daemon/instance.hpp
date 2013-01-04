@@ -37,10 +37,11 @@ namespace SpeechControl {
    virtual ~Instance();
    
   public slots:
-   void startListening();
-   void stopListening();
+   void startListening(QString& p_listenerName);
+   void stopListening(QString& p_listenerName);
    QStringList listenerNames() const;
-   bool isListening() const;
+   bool isListening(QString& p_listenerName) const;
+   Listeners::AbstractListener* listener() const;
    
   signals:
    void startedListening();
@@ -48,7 +49,8 @@ namespace SpeechControl {
    
   private:
    void initializeDbus();
-   AbstractListenerList listeners;
+   Listeners::AbstractListenerCollection listeners;
+   Listeners::AbstractListener* curListener;
    QDBusConnection bus;
   };
 

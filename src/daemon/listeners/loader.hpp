@@ -19,33 +19,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef SPEECHCONTROL_LISTENERS_DUMMY_HPP
-#define SPEECHCONTROL_LISTENERS_DUMMY_HPP
+#ifndef SPEECHCONTROL_LISTENERLOADER_HPP
+#define SPEECHCONTROL_LISTENERLOADER_HPP
 
-#include <listener.hpp>
+#include <QtPlugin>
+#include <QPluginLoader>
+#include <QObject>
+#include <listeners/loader.hpp>
 
 namespace SpeechControl {
-
 namespace Listeners {
-
-class Dummy : public SpeechControl::AbstractListener
+class Loader : public QPluginLoader
 {
-public:
-    Dummy();
-    virtual ~Dummy();
+  Q_OBJECT
 
-    Q_OBJECT
-public slots:
-    virtual void stop();
-    virtual void start();
-    
 public:
-    virtual bool active() const;
-    virtual QString name() const;
+    explicit Loader(QString& p_listenerName, QObject* parent = 0);
+    virtual ~Loader();
+    bool load();
+    bool isLoaded() const;
+    AbstractListener* listenerInstance();
 };
 
 }
 
 }
 
-#endif // SPEECHCONTROL_LISTENERS_DUMMY_HPP
+#endif // SPEECHCONTROL_LISTENERLOADER_HPP

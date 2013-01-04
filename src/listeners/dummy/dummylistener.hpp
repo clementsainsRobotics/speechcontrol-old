@@ -1,7 +1,7 @@
 /*
  * This file is part of SpeechControl.
  *
- * Copyright 2012 Jacky Alcine <jacky.alcine@thesii.org>
+ * Copyright 2013 Jacky Alcine <jacky.alcine@thesii.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Library General Public License as
@@ -19,28 +19,33 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <QCoreApplication>
-#include "global.hpp"
-#include "instance.hpp"
+#ifndef SPEECHCONTROL_LISTENERS_DUMMY_HPP
+#define SPEECHCONTROL_LISTENERS_DUMMY_HPP
 
-using SpeechControl::Daemon::Instance;
+#include <listener.hpp>
 
-int main(int argc, char** argv){
-  // Just so we know who we are.
-  QCoreApplication::setOrganizationName("Synthetic Intellect Institute");
-  QCoreApplication::setOrganizationDomain("thesii.org");
-  QCoreApplication::setApplicationName("SpeechControl");
-  
-  // Lemme get a QCoreApplication for 200.
-  QCoreApplication* app = new QCoreApplication(argc,argv);
+namespace SpeechControl {
 
-  // Now, grab that instance one time!
-  Instance* instance = new Instance();
+namespace Listeners {
 
-  // Who's your momma?!
-  instance->setParent(app);
+class DummyListener : public AbstractListener
+{
+public:
+    DummyListener();
+    virtual ~DummyListener();
 
-  qDebug() << "D-Bus should be started.";
+    Q_OBJECT
+public slots:
+    virtual void stop();
+    virtual void start();
+    
+public:
+    virtual bool active() const;
+    virtual QString name() const;
+};
 
-  return app->exec();
 }
+
+}
+
+#endif // SPEECHCONTROL_LISTENERS_DUMMY_HPP
