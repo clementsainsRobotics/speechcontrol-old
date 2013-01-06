@@ -5,8 +5,8 @@ Speech recognition software for human beings.
 
 ***
 
-Website: http://thesii.org/wiki/SpeechControl
-GitHub:  https://github.com/thesii/speechcontrol
+SpeechControl has its own [website](http://thesii.org/wiki/SpeechControl) and 
+[git repository](https://github.com/thesii/speechcontrol); feel free to check it out.
 
 ## Introduction
 
