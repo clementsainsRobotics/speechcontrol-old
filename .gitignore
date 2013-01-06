@@ -6,6 +6,7 @@ CMakeLists.txt.user
 .kdev4
 *.kdev*
 *.pyc
+*.bak
 global.hpp
 tests/cmake/*
 obj*gnu
