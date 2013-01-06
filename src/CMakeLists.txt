@@ -5,5 +5,9 @@ include_directories(${CMAKE_CURRENT_DIRECTORY})
 
 add_subdirectory(daemon)
 add_subdirectory(listeners)
+add_subdirectory(bindings)
 add_subdirectory(tests)
-add_subdirectory(kde)
+
+if (WITH_KDE)
+  add_subdirectory(kde)
+endif(WITH_KDE)

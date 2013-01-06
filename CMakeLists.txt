@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 2.8)
 # Incorporate our custom CMake modules.
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 
+# Special options to include in the build.
+option(WITH_KDE "Provides support with KDE." OFF)
+
 ## Required packages
 find_package(PkgConfig 0.2 REQUIRED)
 find_package(Qt4 4.7 COMPONENTS
