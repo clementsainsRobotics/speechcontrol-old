@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
-file(GLOB CMAKE_FILES "*.cmake")
+include(CMakeInstallModules)
+file(GLOB SPCHCNTRL_CMAKE_FILES "Modules/*.cmake")
 
-install(FILES ${CMAKE_MODULES}
-    DESTINATION "${CMAKE_INSTALL_PREFIX}/share/cmake-${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}/Modules"
-    COMPONENT dev)
+cmake_install_modules("${SPCHCNTRL_CMAKE_FILES}")
+cmake_install_modules("Templates/cmake_uninstall.cmake.in")

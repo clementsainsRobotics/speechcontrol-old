@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-## Variables shared by app/ and plugins/
-set(SPCHCNTRL_BUILDING ON)
+configure_file("global.hpp.in" "global.hpp")
+include_directories(${CMAKE_CURRENT_DIRECTORY})
 
-add_subdirectory(lib)
+add_subdirectory(daemon)
+add_subdirectory(listeners)
 add_subdirectory(tests)
-#add_subdirectory(bindings)
-#add_subdirectory(app)
-#add_subdirectory(plugins)
+add_subdirectory(kde)
