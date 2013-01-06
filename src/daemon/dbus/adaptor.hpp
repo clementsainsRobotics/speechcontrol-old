@@ -54,12 +54,11 @@ namespace SpeechControl {
       Q_NOREPLY void disableListener(const QString& p_listenerName);
       bool isListening(const QString& p_listenerName) const;
       bool isListenerEnabled(const QString& p_listenerName) const;
-      QString currentListener() const;
       QStringList listeners() const;
       
     signals:
-      void stoppedListening();
-      void startedListening();
+      void stoppedListening(const QString& p_listenerName);
+      void startedListening(const QString& p_listenerName);
       
     private:
      Instance* instance() const;

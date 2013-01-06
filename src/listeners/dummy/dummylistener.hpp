@@ -42,6 +42,11 @@ public slots:
 public:
     virtual bool active() const;
     virtual QString name() const;
+    
+signals:
+  void finishedListening(QString result);
+  void startedListening();
+  void stoppedListening();
 };
 
 }

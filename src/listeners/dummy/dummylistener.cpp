@@ -34,11 +34,16 @@ DummyListener::DummyListener() : AbstractListener()
 void DummyListener::stop()
 {
   qDebug () << "Dummy listener stopped.";
+  QString result("Dummy listener is dummy.");
+  emit stoppedListening();
+  emit finishedListening(result);
 }
 
 void DummyListener::start()
 {
   qDebug () << "Dummy listener started.";
+  emit startedListening();
+  stop();
 }
 
 bool DummyListener::active() const

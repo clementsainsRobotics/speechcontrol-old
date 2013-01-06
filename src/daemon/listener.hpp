@@ -61,7 +61,7 @@ protected:
   void loadSettings(const QString& settingsName);
 
 signals:
-  void finishedListening(QString& result);
+  void finishedListening(QString result);
   void startedListening();
   void stoppedListening();
   

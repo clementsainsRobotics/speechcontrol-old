@@ -73,15 +73,6 @@ bool Adaptor::isListenerEnabled(const QString& p_listenerName) const
   return settings.value("Enabled_Listeners/" + p_listenerName,false).toBool();
 }
 
-QString Adaptor::currentListener() const
-{
-  if (instance()->listener() != 0){
-    return instance()->listener()->name();
-  }
-  
-  return QString::null;
-}
-
 Adaptor::~Adaptor()
 {
 

@@ -35,23 +35,26 @@ namespace SpeechControl {
   public:
    Instance();
    virtual ~Instance();
+   QStringList listenerNames() const;
+   bool isListening(const QString& p_listenerName) const;
    
   public slots:
    void startListening(const QString& p_listenerName);
    void stopListening(const QString& p_listenerName);
-   QStringList listenerNames() const;
-   bool isListening(const QString& p_listenerName) const;
-   Listeners::AbstractListener* listener() const;
+      
+  protected slots:
+   void captureFinishedResult(const QString& p_listenerText);
    
   signals:
    void startedListening();
    void stoppedListening();
+   void finishedListening(const QString& p_listenerName, const QString& p_listenerText);
    
   private:
    void initializeDbus();
-   Listeners::AbstractListenerCollection listeners;
-   Listeners::AbstractListener* curListener;
+   Listeners::AbstractListener* obtainListener(QString p_listenerName);
    QDBusConnection bus;
+   Listeners::AbstractListenerCollection listeners;
   };
 
  }

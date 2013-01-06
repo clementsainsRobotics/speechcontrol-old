@@ -33,21 +33,11 @@ using SpeechControl::Daemon::Instance;
 using SpeechControl::Listeners::AbstractListener;
 
 Instance::Instance() : QObject(QCoreApplication::instance()), bus(QDBusConnection::sessionBus()),
- listeners(), curListener(0)
+ listeners()
 {
   this->initializeDbus();
   QCoreApplication::addLibraryPath(SPCHCNTRL_LISTENERS_LIB_PATH);
   QStringList listeners = AbstractListener::listenerNames();
-  qDebug () << "Found" << listeners.count() << "listener(s);" << listeners;
-  foreach (QString listener, listeners){
-    AbstractListener* instanceListener = AbstractListener::obtain(listener);
-    
-    if (instanceListener != 0){
-      qDebug() << "Loaded listener" << instanceListener->name();
-    } else {
-      qDebug() << "Invalid listener" << listener;
-    }
-  }
 }
 
 void Instance::initializeDbus()
@@ -80,25 +70,50 @@ bool Instance::isListening(const QString& p_listenerName) const
 
 void Instance::startListening(const QString& p_listenerName)
 {
-  if (listener() != 0){
-    listener()->start();
-  }
-  
-  emit startedListening();
+  AbstractListener* listener = 0;
+  listener = obtainListener(p_listenerName);
+  if (listener){
+    connect(listener,SIGNAL(startedListening()),this,SIGNAL(startedListening()));
+    connect(listener,SIGNAL(stoppedListening()),this,SIGNAL(stoppedListening()));
+    connect(listener,SIGNAL(finishedListening(QString)),this,SLOT(captureFinishedResult(QString)));
+    listener->start();
+  }  
 }
 
 void Instance::stopListening(const QString& p_listenerName)
 {
-  if (listener() != 0){
-    listener()->stop();
+  AbstractListener* listener = 0;
+  listener = obtainListener(p_listenerName);
+  if (listener){
+    disconnect(listener,SIGNAL(startedListening()),this,SIGNAL(startedListening()));
+    disconnect(listener,SIGNAL(stoppedListening()),this,SIGNAL(stoppedListening()));
+    listener->stop();
   }
-  
-  emit stoppedListening();
 }
 
-AbstractListener* Instance::listener() const
+AbstractListener* Instance::obtainListener(QString p_listenerName)
 {
-  return curListener;
+  AbstractListener* listener = 0;
+  
+  if (listeners.count(p_listenerName) == 0){
+    listener = AbstractListener::obtain(p_listenerName);
+    
+    if (listener != 0){
+      qDebug() << "Made a new instance of a listener of" << p_listenerName << ".";
+      listeners.insert(p_listenerName,listener);
+    }
+  } else {
+    listener = listeners.value(p_listenerName);
+  }
+  
+  return listener;
+}
+
+
+void Instance::captureFinishedResult(const QString& p_listenerText)
+{
+  qDebug() << "Word on the block was " << p_listenerText;
+  emit finishedListening(QString::null,p_listenerText);
 }
 
 Instance::~Instance()
