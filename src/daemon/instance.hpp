@@ -37,10 +37,10 @@ namespace SpeechControl {
    virtual ~Instance();
    
   public slots:
-   void startListening(QString& p_listenerName);
-   void stopListening(QString& p_listenerName);
+   void startListening(const QString& p_listenerName);
+   void stopListening(const QString& p_listenerName);
    QStringList listenerNames() const;
-   bool isListening(QString& p_listenerName) const;
+   bool isListening(const QString& p_listenerName) const;
    Listeners::AbstractListener* listener() const;
    
   signals:

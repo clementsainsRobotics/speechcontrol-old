@@ -47,9 +47,9 @@ public:
   
   static AbstractListenerCollection listeners();
   static QStringList listenerNames();
-  static bool enableListener(QString& listenerName);
-  static bool disableListener(QString& listenerName);
-  static AbstractListener* obtain(QString& listenerName);
+  static bool enableListener(const QString& listenerName);
+  static bool disableListener(const QString& listenerName);
+  static AbstractListener* obtain(const QString& listenerName);
   
 public slots:
   virtual void start() = 0;
@@ -58,6 +58,7 @@ public slots:
 protected:
   virtual void enable();
   virtual void disable();
+  void loadSettings(const QString& settingsName);
 
 signals:
   void finishedListening(QString& result);
@@ -66,7 +67,6 @@ signals:
   
 private:
   QSettings* settings;
-  void loadSettings();
 };
 
 }

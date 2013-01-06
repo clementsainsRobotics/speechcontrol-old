@@ -25,16 +25,16 @@
 #include <QtPlugin>
 #include <QPluginLoader>
 #include <QObject>
-#include <listeners/loader.hpp>
 
 namespace SpeechControl {
 namespace Listeners {
+class AbstractListener;
 class Loader : public QPluginLoader
 {
   Q_OBJECT
 
 public:
-    explicit Loader(QString& p_listenerName, QObject* parent = 0);
+    explicit Loader(const QString& p_listenerName, QObject* parent = 0);
     virtual ~Loader();
     bool load();
     bool isLoaded() const;

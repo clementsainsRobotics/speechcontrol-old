@@ -21,22 +21,23 @@
 
 #include <QDir>
 #include <QStringList>
+#include "listeners/loader.hpp"
 #include "listener.hpp"
 #include "global.hpp"
 
+using SpeechControl::Listeners::Loader;
 using SpeechControl::Listeners::AbstractListener;
 using SpeechControl::Listeners::AbstractListenerList;
 using SpeechControl::Listeners::AbstractListenerCollection;
 
 AbstractListener::AbstractListener(QObject* parent): QObject(parent), settings(0)
 {
-  loadSettings();
 }
 
-void AbstractListener::loadSettings()
+void AbstractListener::loadSettings(const QString& settingsName)
 {
   QString path = SPCHCNTRL_LISTENERS_PATH;
-  path += "/" + name() + ".spec";
+  path += "/" + settingsName + ".spec";
   settings = new QSettings(path);
 }
 
@@ -59,18 +60,20 @@ QStringList AbstractListener::listenerNames()
   return dir.entryList().replaceInStrings (".spec", "");
 }
 
-AbstractListener* AbstractListener::obtain(QString& listenerName)
+AbstractListener* AbstractListener::obtain(const QString& listenerName)
 {
-  return 0; // for now.
+  Loader* loader = new Loader(listenerName);
+  loader->load();
+  return loader->listenerInstance();
 }
 
-bool AbstractListener::disableListener(QString& listenerName)
+bool AbstractListener::disableListener(const QString& listenerName)
 {
   AbstractListener* listener = AbstractListener::obtain(listenerName);
   listener->disable();
 }
 
-bool AbstractListener::enableListener(QString& listenerName)
+bool AbstractListener::enableListener(const QString& listenerName)
 {
   AbstractListener* listener = AbstractListener::obtain(listenerName);
   listener->enable();

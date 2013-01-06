@@ -48,12 +48,12 @@ namespace SpeechControl {
      virtual ~Adaptor();
 
     public slots:
-      Q_NOREPLY void startListening(QString& p_listenerName);
-      Q_NOREPLY void stopListening(QString& p_listenerName);
-      Q_NOREPLY void enableListener(QString& p_listenerName);
-      Q_NOREPLY void disableListener(QString& p_listenerName);
-      bool isListening(QString& p_listenerName) const;
-      bool isListenerEnabled(QString& p_listenerName) const;
+      Q_NOREPLY void startListening(const QString& p_listenerName);
+      Q_NOREPLY void stopListening(const QString& p_listenerName);
+      Q_NOREPLY void enableListener(const QString& p_listenerName);
+      Q_NOREPLY void disableListener(const QString& p_listenerName);
+      bool isListening(const QString& p_listenerName) const;
+      bool isListenerEnabled(const QString& p_listenerName) const;
       QString currentListener() const;
       QStringList listeners() const;
       

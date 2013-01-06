@@ -37,17 +37,17 @@ Instance* Adaptor::instance() const
   return qobject_cast<SpeechControl::Daemon::Instance*>(parent());
 }
 
-bool Adaptor::isListening(QString& p_listenerName) const
+bool Adaptor::isListening(const QString& p_listenerName) const
 {
   return instance()->isListening(p_listenerName);
 }
 
-void Adaptor::startListening(QString& p_listenerName)
+void Adaptor::startListening(const QString& p_listenerName)
 {
   instance()->startListening(p_listenerName);
 }
 
-void Adaptor::stopListening(QString& p_listenerName)
+void Adaptor::stopListening(const QString& p_listenerName)
 {
   instance()->stopListening(p_listenerName);
 }
@@ -57,17 +57,17 @@ QStringList Adaptor::listeners() const
   return instance()->listenerNames();
 }
 
-void Adaptor::disableListener(QString& p_listenerName)
+void Adaptor::disableListener(const QString& p_listenerName)
 {
   AbstractListener::disableListener(p_listenerName);
 }
 
-void Adaptor::enableListener(QString& p_listenerName)
+void Adaptor::enableListener(const QString& p_listenerName)
 {
   AbstractListener::enableListener(p_listenerName);
 }
 
-bool Adaptor::isListenerEnabled(QString& p_listenerName) const
+bool Adaptor::isListenerEnabled(const QString& p_listenerName) const
 {
   QSettings settings;
   return settings.value("Enabled_Listeners/" + p_listenerName,false).toBool();

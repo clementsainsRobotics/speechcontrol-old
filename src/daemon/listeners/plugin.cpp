@@ -25,7 +25,7 @@
 
 using SpeechControl::Listeners::AbstractPlugin;
 
-AbstractPlugin::AbstractPlugin(QObject* parent)
+AbstractPlugin::AbstractPlugin(QObject* parent) : QObject(parent)
 {
 
 }

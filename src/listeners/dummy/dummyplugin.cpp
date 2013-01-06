@@ -26,6 +26,10 @@ using SpeechControl::Listeners::DummyPlugin;
 using SpeechControl::Listeners::DummyListener;
 using SpeechControl::Listeners::AbstractListener;
 
+DummyPlugin::DummyPlugin(QObject* parent): AbstractPlugin(parent)
+{
+}
+
 QSettings* DummyPlugin::settings() const
 {
   return new QSettings(AbstractPlugin::settingsPath("dummy").toLocalFile());

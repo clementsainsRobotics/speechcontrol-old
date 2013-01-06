@@ -28,7 +28,7 @@
 #define SPEECHCONTROL_LISTENERS_DUMMYPLUGIN_HPP
 
 #include <listeners/plugin.hpp>
-
+#include <QtPlugin>
 
 namespace SpeechControl {
 
@@ -38,12 +38,15 @@ class DummyPlugin : public AbstractPlugin
 {
 
 public:
-    virtual QSettings* settings() const;
-    virtual AbstractListener* listener() const;
+  explicit DummyPlugin(QObject* parent = 0);
+  virtual QSettings* settings() const;
+  virtual AbstractListener* listener() const;
 };
 
 }
 
 }
+
+Q_EXPORT_PLUGIN2(speechcontrol-listener-dummy, SpeechControl::Listeners::DummyPlugin);
 
 #endif // SPEECHCONTROL_LISTENERS_DUMMYPLUGIN_HPP

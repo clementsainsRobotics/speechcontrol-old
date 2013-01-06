@@ -19,34 +19,42 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#include <QDebug>
 #include "listener.hpp"
 #include "listeners/plugin.hpp"
 #include "listeners/loader.hpp"
+#include "global.hpp"
 
 using SpeechControl::Listeners::AbstractListener;
 using SpeechControl::Listeners::AbstractPlugin;
 using SpeechControl::Listeners::Loader;
 
-Loader::Loader(QString& p_listenerName, QObject* parent): QPluginLoader(parent)
+Loader::Loader(const QString& p_listenerName, QObject* parent): QPluginLoader(parent)
 {
-  QString libraryName(p_listenerName + ".so");
+  QString libraryName("libspeechcontrol-listener-" + p_listenerName + ".so");
+  libraryName.prepend("/");
+  libraryName.prepend(SPCHCNTRL_LISTENERS_LIB_PATH);
+  qDebug() << "Lib path: " << libraryName;
   setFileName(libraryName);
 }
 
 AbstractListener* Loader::listenerInstance()
 {
   if (!isLoaded()){
+    qDebug() << "Bad library." << this->errorString() << this->fileName();
     return 0;
   } else {
     QObject* instance = this->instance();
     AbstractPlugin* plugin = qobject_cast<AbstractPlugin*>(instance);
     
     if (instance == 0){
+      qDebug() << "Instance nil.";
       return 0;
     } else {
       AbstractListener* listener = plugin->listener();
       
       if (listener == 0){
+	qDebug() << "Listener nil.";
 	return 0;
       } else {
 	return listener;

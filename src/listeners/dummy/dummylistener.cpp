@@ -27,6 +27,7 @@ using SpeechControl::Listeners::DummyListener;
 
 DummyListener::DummyListener() : AbstractListener()
 {
+  loadSettings(name());
   qDebug () << "Dummy listener created.";
 }
 

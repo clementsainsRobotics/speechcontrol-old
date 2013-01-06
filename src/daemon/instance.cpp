@@ -39,6 +39,15 @@ Instance::Instance() : QObject(QCoreApplication::instance()), bus(QDBusConnectio
   QCoreApplication::addLibraryPath(SPCHCNTRL_LISTENERS_LIB_PATH);
   QStringList listeners = AbstractListener::listenerNames();
   qDebug () << "Found" << listeners.count() << "listener(s);" << listeners;
+  foreach (QString listener, listeners){
+    AbstractListener* instanceListener = AbstractListener::obtain(listener);
+    
+    if (instanceListener != 0){
+      qDebug() << "Loaded listener" << instanceListener->name();
+    } else {
+      qDebug() << "Invalid listener" << listener;
+    }
+  }
 }
 
 void Instance::initializeDbus()
@@ -55,7 +64,7 @@ QStringList Instance::listenerNames() const
   return AbstractListener::listenerNames();
 }
 
-bool Instance::isListening(QString& p_listenerName) const
+bool Instance::isListening(const QString& p_listenerName) const
 {
   if (this->listeners.empty()){
     return false;
@@ -69,7 +78,7 @@ bool Instance::isListening(QString& p_listenerName) const
   return false;
 }
 
-void Instance::startListening(QString& p_listenerName)
+void Instance::startListening(const QString& p_listenerName)
 {
   if (listener() != 0){
     listener()->start();
@@ -78,7 +87,7 @@ void Instance::startListening(QString& p_listenerName)
   emit startedListening();
 }
 
-void Instance::stopListening(QString& p_listenerName)
+void Instance::stopListening(const QString& p_listenerName)
 {
   if (listener() != 0){
     listener()->stop();
