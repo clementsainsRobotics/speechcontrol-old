@@ -18,6 +18,10 @@ find_package(Qt4 4.7 COMPONENTS
 find_package(SphinxBase 0.7 REQUIRED)
 find_package(PocketSphinx 0.7 REQUIRED)
 
+## Optional packages
+find_package(Wintermute)
+set(WINTERMUTE_PACKAGE_INFO "Integration with Wintermute.")
+
 include(SpeechControlDefaults)
 include(SpeechControlMacros)
 include(CTestMacroExtras)
@@ -40,7 +44,7 @@ set(SPCHCNTRL_LIBRARIES ${QT_QTCORE_LIBRARY}
 ## The subdirectories, order's vital here.
 add_subdirectory(cmake)
 add_subdirectory(res)
-add_subdirectory(src)
+add_subdirectory(speechcontrol)
 
 if(WITH_DOCS)
     add_subdirectory(doc)
