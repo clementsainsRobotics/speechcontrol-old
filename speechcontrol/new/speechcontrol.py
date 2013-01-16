@@ -3,6 +3,8 @@
 
 import sys
 import argparse
+import gobject
+gobject.threads_init()
 
 from dbus.mainloop.qt import DBusQtMainLoop
 from PyQt4 import QtDBus
