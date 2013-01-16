@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import dbus
 import argparse
 
 from dbus.mainloop.qt import DBusQtMainLoop
+from PyQt4 import QtDBus
+from PyQt4.QtDBus import QDBusConnection
 from PyQt4.QtGui import QApplication
 
 from speechcontrol.app import App
@@ -18,40 +19,39 @@ parser.add_argument("-a", "--asr", help="automatic speech recognition backend to
         choices=["pocketsphinx"])
 args = parser.parse_args()
 
-# WINTERMUTE_SUPPORT = args.wsupport
 DEFAULT_CONFIG="/usr/share/speechcontrol/config/default.conf"
 DEFAULT_ASR="pocketsphinx"
 
 # Try to load Wintermute support (Agent class, etc.)
 # if WINTERMUTE_SUPPORT:
-# 	try:
-# 		from wintermute.members import Agent
-# 	except:
-# 		print("[I] Wintermute support not found.")
-# 		WINTERMUTE_SUPPORT = False
+#       try:
+#               from wintermute.members import Agent
+#       except:
+#               print("[I] Wintermute support not found.")
+#               WINTERMUTE_SUPPORT = False
 # else:
-# 	print("[I] Running as a standalone application.")
+#       print("[I] Running as a standalone application.")
 
 def read_configuration(file=DEFAULT_CONFIG):
-	pass
+        pass
 
 def run():
-	# Establish D-Bus
-	# Instantiate every important class
-	# Run!
+    # Establish D-Bus
+    # Instantiate every important class
+    # Run!
     app = App(sys.argv)
     app.set_asr_backend(DEFAULT_ASR)
 
-	DBusQtMainLoop(set_as_default=True)
-	bus = dbus.SystemBus()
+    DBusQtMainLoop(set_as_default=True)
+    bus = QDBusConnection.sessionBus()
 
-	sys.exit(app.exec_())
+    sys.exit(app.exec_())
 
 if __name__ == "__main__":
-	read_configuration(args.config)
+    read_configuration(args.config)
 
     # Overwrite config by command-line arguments
     if args.asr:
         DEFAULT_ASR = args.asr
 
-	run()
+    run()
