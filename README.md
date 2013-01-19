@@ -30,9 +30,10 @@ Usual build procedure is as follows:
     $ mkdir build && cd build
     $ cmake ..
     $ make
+    $ make test
     # make install
 
-Note that it *won't* build any plug-ins, documentation and tests.
+Note that it _won't_ build any plug-ins or documentation.
 
 ## Bug Reporting
 
