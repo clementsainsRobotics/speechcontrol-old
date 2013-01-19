@@ -27,13 +27,9 @@ you to:
 For more detailed instructions look into the INSTALL file.
 Usual build procedure is as follows:
 
-    $ mkdir build && cd build
-    $ cmake ..
-    $ make
-    $ make test
-    # make install
-
-Note that it _won't_ build any plug-ins or documentation.
+    $ cd speechcontrol
+    $ python setup.py build
+    # python setup.py install
 
 ## Bug Reporting
 
@@ -49,6 +45,7 @@ for SpeechControl bug reporting, try building SpeechControl with
 CMAKE_BUILD_TYPE set to 'RelWithDebInfo' or 'Debug'. Check the INSTALL
 file for more information about the build and execution cycle of SpeechControl.
 
+[OBSOLETE]
 It's also recommended that if you're testing or building SpeechControl and would
 like to produce a useful report that you run SpeechControl under a debugger like
 the GNU Debugger (gdb). To do so, from the terminal, invoke the following:
