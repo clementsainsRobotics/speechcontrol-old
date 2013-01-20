@@ -27,7 +27,6 @@ you to:
 For more detailed instructions look into the INSTALL file.
 Usual build procedure is as follows:
 
-    $ cd speechcontrol
     $ python setup.py build
     # python setup.py install
 
