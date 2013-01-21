@@ -7,4 +7,4 @@ class App(QApplication):
         self.asr_backend = "pocketsphinx"
 
     def set_asr_backend(self, backend):
-        seld.asr_backend = backend
+        self.asr_backend = backend
