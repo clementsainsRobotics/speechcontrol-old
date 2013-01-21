@@ -3,8 +3,10 @@
 
 import sys
 import argparse
-import gobject
-gobject.threads_init()
+
+import gi
+gi.require_version('Gst', '0.10')
+from gi.repository import Gst
 
 from dbus.mainloop.qt import DBusQtMainLoop
 from PyQt4 import QtDBus

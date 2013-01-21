@@ -7,5 +7,5 @@ setup(
         author_email="dev@thesii.org",
         url="http://www.thesii.org/projects/speechcontrol.html",
         packages=["speechcontrol", "speechcontrol.asr", "speechcontrol.gui"],
-        scripts=["speechcontrol.py"]
+        scripts=["speechcontrol/speechtrainer.py", "speechcontrol/speechdaemon.py"]
         )
