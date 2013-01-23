@@ -13,18 +13,18 @@ from PyQt4 import QtDBus
 from PyQt4.QtDBus import QDBusConnection
 from PyQt4.QtGui import QApplication
 
-from speechcontrol.app import App
+from app import App
 
 
 # parser.add_argument("--wsupport", action="store_true", help="enable Wintermute support")
 parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--config", help="configuration file to use")
 parser.add_argument("-a", "--asr", help="automatic speech recognition backend to use",
-        choices=["pocketsphinx"])
+                    choices=["pocketsphinx"])
 args = parser.parse_args()
 
-DEFAULT_CONFIG="/usr/share/speechcontrol/config/default.conf"
-DEFAULT_ASR="pocketsphinx"
+DEFAULT_CONFIG = "/usr/share/speechcontrol/config/default.conf"
+DEFAULT_ASR = "pocketsphinx"
 
 # Try to load Wintermute support (Agent class, etc.)
 # if WINTERMUTE_SUPPORT:
@@ -36,8 +36,10 @@ DEFAULT_ASR="pocketsphinx"
 # else:
 #       print("[I] Running as a standalone application.")
 
+
 def read_configuration(file=DEFAULT_CONFIG):
         pass
+
 
 def run():
     # Establish D-Bus
