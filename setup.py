@@ -8,6 +8,6 @@ setup(
         url="http://www.thesii.org/projects/speechcontrol.html",
         license="GPLv3+"
         package_dir={"" : "package"},
-        packages=["speechcontrol", "speechcontrol.asr", "speechcontrol.gui"],
+        packages=["speechcontrol"],
         scripts=["trainer/speechtrainer.py", "daemon/speechdaemon.py"]
         )
