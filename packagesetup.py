@@ -1,8 +1,6 @@
 from distutils.core import setup
 
-package_dirs = {"speechcontrol" : "package",
-				"asr" : "daemon",
-				"gui" : "trainer"}
+package_dirs = {"" : "package"}
 setup(
         name="SpeechControl",
         version="0.1",
@@ -12,6 +10,5 @@ setup(
         url="http://www.thesii.org/projects/speechcontrol.html",
         license="GPLv3+",
         package_dir=package_dirs,
-        packages=["speechcontrol", "asr", "gui"],
-        scripts=["trainer/speechtrainer.py", "daemon/speechdaemon.py"]
+        packages=["speechcontrol"]
         )
