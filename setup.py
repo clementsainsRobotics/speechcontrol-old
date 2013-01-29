@@ -6,6 +6,8 @@ setup(
         author="SpeechControl Developers",
         author_email="dev@thesii.org",
         url="http://www.thesii.org/projects/speechcontrol.html",
+        license="GPLv3+"
+        package_dir={"" : "package"},
         packages=["speechcontrol", "speechcontrol.asr", "speechcontrol.gui"],
-        scripts=["speechcontrol/speechtrainer.py", "speechcontrol/speechdaemon.py"]
+        scripts=["trainer/speechtrainer.py", "daemon/speechdaemon.py"]
         )
