@@ -7,6 +7,8 @@ import time
 import atexit
 import signal
 
+from PyQt4 import QtCore, QtDBus
+from PyQt4.QtDBus import QDBusConnection
 
 class Daemon:
     """A generic daemon class.
@@ -126,3 +128,19 @@ class Daemon:
 
         It will be called after the process has been daemonized by
         start() or restart()."""
+
+class SpeechDaemon(Daemon):
+    def run(self):
+        # Instantiate all classes, adaptors and register interfaces
+        from .asr.recognizer import SpeechRecognizer, RecognizerAdaptor
+
+        app = QtCore.QCoreApplication(sys.argv)
+        self.speechRecognizer = SpeechRecognizer()
+        self.recogAdaptor = RecognizerAdaptor(self.speechRecognizer)
+
+        connection = QtDBus.QDBusConnection.sessionBus()
+        connection.registerObject("/SpeechRecognizer", self.speechRecognizer)
+        connection.registerService("org.sii.speechcontrol")
+
+        rc = app.exec_()
+        
