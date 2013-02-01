@@ -3,7 +3,7 @@ from PyQt4.QtDBus import QDBusMessage, QDBusConnection
 
 DBUS_SERVICE = "org.sii.speechcontrol"
 DBUS_OBJECT_PATH = "/SpeechRecognizer"
-DBUS_INTERFACE = "org.sii.speechcontrol.recognize"
+DBUS_INTERFACE = "org.sii.speechcontrol.recognition"
 
 class RecognitionInterface(QtDBus.QDBusAbstractInterface):
 	def __init__(self, service, path, connection, parent=None):

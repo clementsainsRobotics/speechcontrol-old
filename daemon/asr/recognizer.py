@@ -17,3 +17,13 @@ class SpeechRecognizer(QtCore.QObject):
     def oneUtteranceTo(self, receiver, method, errMethod):
         pass
 
+class RecognizerAdaptor(QtDBus.QDBusAbstractAdaptor):
+
+	QtCore.Q_CLASSINFO("D-Bus Interface", "org.sii.speechcontrol.recognition")
+    QtCore.Q_CLASSINFO("D-Bus Introspection", ''
+            '  <interface name="org.sii.speechcontrol.recognition">\n'
+            '  </interface>\n'
+            '')
+
+	def __init__(self, parent):
+		super().__init__(parent)
