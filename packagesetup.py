@@ -10,5 +10,5 @@ setup(
         url="http://www.thesii.org/projects/speechcontrol.html",
         license="GPLv3+",
         package_dir=package_dirs,
-        packages=["speechcontrol"]
+        packages=["speechcontrol", "speechcontrol.config"]
         )
