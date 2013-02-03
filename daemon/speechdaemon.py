@@ -10,6 +10,8 @@ import signal
 from PyQt4 import QtCore, QtDBus
 from PyQt4.QtDBus import QDBusConnection
 
+from asr.recognizer import SpeechRecognizer, RecognizerAdaptor
+
 class Daemon:
     """A generic daemon class.
 
@@ -132,7 +134,6 @@ class Daemon:
 class SpeechDaemon(Daemon):
     def run(self):
         # Instantiate all classes, adaptors and register interfaces
-        from .asr.recognizer import SpeechRecognizer, RecognizerAdaptor
 
         app = QtCore.QCoreApplication(sys.argv)
         self.speechRecognizer = SpeechRecognizer()
@@ -143,4 +144,7 @@ class SpeechDaemon(Daemon):
         connection.registerService("org.sii.speechcontrol")
 
         rc = app.exec_()
-        
+
+if __name__ == "__main__":
+    daemon = SpeechDaemon("/tmp/speechcontrol.pid")
+    daemon.start()
