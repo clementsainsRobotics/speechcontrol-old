@@ -1,0 +1,6 @@
+For SpeechControl package:
+  ✔ Perhaps rename asr.py to core.py @decision @done (13-02-03 20:38)
+
+For SpeechDaemon:
+  ☐ Add more API to SpeechRecognizer @api
+  ☐ Fill D-Bus introspection info
