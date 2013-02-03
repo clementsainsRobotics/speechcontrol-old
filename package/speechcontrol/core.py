@@ -21,6 +21,7 @@ class RecognitionInterface(QtDBus.QDBusAbstractInterface):
 
 class SpeechControl(QtCore.QObject):
 	def __init__(self):
+		super().__init__()
 		self.recogIface = RecognitionInterface(DBUS_SERVICE, DBUS_OBJECT_PATH, 
 			QtDBus.QDBusConnection.sessionBus(), self)
 
