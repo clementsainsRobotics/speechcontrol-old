@@ -4,3 +4,5 @@ For SpeechControl package:
 For SpeechDaemon:
   ☐ Add more API to SpeechRecognizer @api
   ☐ Fill D-Bus introspection info
+  ✔ Test if it runs @testing @done (13-02-03 20:46)
+       -- It almost works - GStreamer0.10 turned out to be buggy however :/
