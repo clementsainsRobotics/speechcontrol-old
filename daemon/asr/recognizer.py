@@ -1,10 +1,11 @@
-import gi
-gi.require_version('Gst', '0.10') # PocketSphinx has a plug-in for GStraemer 0.10 only - breakage is to be expected :/
-
-from gi.repository import Gst
 from PyQt4 import QtCore, QtDBus
 
 from .backend import PocketSphinx
+
+DBUS_INTROSPECTION_XML = """
+  <interface name="org.sii.speechcontrol.recognition">
+  </interface>
+"""
 
 class SpeechRecognizer(QtCore.QObject):
     def __init__(self):
@@ -19,11 +20,8 @@ class SpeechRecognizer(QtCore.QObject):
 
 class RecognizerAdaptor(QtDBus.QDBusAbstractAdaptor):
 
-	QtCore.Q_CLASSINFO("D-Bus Interface", "org.sii.speechcontrol.recognition")
-    QtCore.Q_CLASSINFO("D-Bus Introspection", ''
-            '  <interface name="org.sii.speechcontrol.recognition">\n'
-            '  </interface>\n'
-            '')
+    QtCore.Q_CLASSINFO("D-Bus Interface", "org.sii.speechcontrol.recognition")
+    QtCore.Q_CLASSINFO("D-Bus Introspection", DBUS_INTROSPECTION_XML)
 
-	def __init__(self, parent):
-		super().__init__(parent)
+    def __init__(self, parent):
+       super().__init__(parent)
