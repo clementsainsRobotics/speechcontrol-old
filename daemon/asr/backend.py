@@ -1,10 +1,13 @@
-import pygst
-pygst.require('0.10')
-import gst
+import gi
+gi.require_version('Gst', '0.10') # PocketSphinx has a plug-in for GStraemer 0.10 only - breakage is to be expected :/
+
+from gi.repository import GObject, Gst
+GObject.threads_init()
+Gst.init(None)
 
 class PocketSphinx:
     def __init__(self):
-        self.pipeline = gst.parse_launch('autoaudiosrc ! audioconvert ! audioresample '
+        self.pipeline = Gst.parse_launch('autoaudiosrc ! audioconvert ! audioresample '
                                          + '! vader name=vad auto-threshold=true '
                                          + '! pocketsphinx name=asr ! fakesink')
         asr = self.pipeline.get_by_name('asr')
@@ -16,7 +19,7 @@ class PocketSphinx:
         bus.add_signal_watch()
         bus.connect('message::application', self.application_message)
 
-        self.pipeline.set_state(gst.STATE_PAUSED)
+        self.pipeline.set_state(Gst.State.PAUSED)
 
     def partial_result(self):
         pass
