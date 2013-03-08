@@ -146,5 +146,6 @@ class SpeechDaemon(Daemon):
         rc = app.exec_()
 
 if __name__ == "__main__":
+    print("*** SpeechDaemon starting...")
     daemon = SpeechDaemon("/tmp/speechcontrol.pid")
     daemon.start()

@@ -1,5 +1,5 @@
 import gi
-gi.require_version('Gst', '0.10') # PocketSphinx has a plug-in for GStraemer 0.10 only - breakage is to be expected :/
+gi.require_version('Gst', '1.0')
 
 from gi.repository import GObject, Gst
 GObject.threads_init()
@@ -9,7 +9,7 @@ class PocketSphinx:
     def __init__(self):
         self.pipeline = Gst.parse_launch('autoaudiosrc ! audioconvert ! audioresample '
                                          + '! vader name=vad auto-threshold=true '
-                                         + '! pocketsphinx name=asr ! fakesink')
+                                         + '! pocketsphinx name=asr ! fakesink') # pocketsphinx element is failing
         asr = self.pipeline.get_by_name('asr')
         asr.connect('partial_result', self.partial_result)
         asr.connect('result', self.result)
