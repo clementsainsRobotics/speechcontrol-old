@@ -1,9 +1,21 @@
+# GStreamer imports
 import gi
 gi.require_version('Gst', '1.0')
 
 from gi.repository import GObject, Gst
 GObject.threads_init()
 Gst.init(None)
+
+# SpeechDaemon imports
+from .pocketsphinx import PocketSphinx
+from PyQt4 import QtCore
+
+from PyQt4.QtCore import QObject
+
+from os import getenv
+# from sii import SC_SHARE_PATH, SC_CONFIG_PATH
+SC_SHARE_PATH = getenv('HOME') + '/.sii/share/speechcontrol'
+SC_CONFIG_PATH = getenv('HOME') + '/.sii/config/speechcontrol'
 
 class GstPocketSphinx:
     def __init__(self):
@@ -30,20 +42,49 @@ class GstPocketSphinx:
     def application_message(self):
         pass
 
-class NativePocketSphinx:
-    def __init__(self):
-        pass
+    #Signals the state of support - currently not working
+    @classmethod
+    def supported():
+        return False
 
 """
-A wrapper backend supporting the choice of the two above ones.
-Availability of each will depend on their state of implementation.
-
 For now, the case is that GStreamer does not work for us becuase there is not
 a PocketSphinx plug-in for the 1.0 version.
 Alternative approach is being implemented based on using PocketSphinx Python
 bindings. It should at least support singular utterance recognition using user's
 microphone.
 """
-class PocketSphinx:
+class NativePocketSphinx(QObject):
+    recognizedToFile = QtCore.pyqtSignal(str)
+
     def __init__(self):
+        super().__init__()
+
+        self.ps = PocketSphinx()
+        self.ps.initializeDecoder()
+        self.ps.initializeAudio()
+
+    def recognizeFromMicrophone(self, sinkFileName):
+        self.ps.recognizeFromMicrophone(sinkFileName)
+        self.recognizedToFile.emit(sinkFileName)
+
+    # This should return an iterator for n file names following some schema
+    def fileNamesRange(self, n):
         pass
+
+    #TODO: Write a solution for continuous recognition
+    # Location of written files (and naming schema) should be governed by
+    # a configuration manager
+    # This will probably need a separate thread (QThread to be used)
+    def startContinuousRecognition(self):
+        continuousSinkFileNameBase = SC_SHARE_PATH + '/contrecog/utts/hyp'
+        # We don't want infinite loop so let's say 1000 utterances
+        for i in range(1000):
+            self.recognizeFromMicrophone(continuousSinkFileNameBase + str(i))
+
+    def stopContinuousRecognition(self):
+        pass
+
+    @classmethod
+    def supported():
+        return True
