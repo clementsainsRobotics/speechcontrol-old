@@ -7,6 +7,8 @@ GObject.threads_init()
 Gst.init(None)
 
 # SpeechDaemon imports
+import logging
+
 from .pocketsphinx import PocketSphinx
 from PyQt4 import QtCore
 
@@ -60,8 +62,11 @@ class NativePocketSphinx(QObject):
     def __init__(self):
         super().__init__()
 
+        logging.info("Initializing PocketSphinx backend")
         self.ps = PocketSphinx()
+        logging.debug("Initializing PocketSphinx decoder")
         self.ps.initializeDecoder()
+        logging.debug("Initializing audio recording")
         self.ps.initializeAudio()
 
     def recognizeFromMicrophone(self, sinkFileName):
@@ -77,6 +82,9 @@ class NativePocketSphinx(QObject):
     # a configuration manager
     # This will probably need a separate thread (QThread to be used)
     def startContinuousRecognition(self):
+        logging.info("Starting continuous speech recognition")
+        logging.warning("Implementation not ready")
+
         continuousSinkFileNameBase = SC_SHARE_PATH + '/contrecog/utts/hyp'
         # We don't want infinite loop so let's say 1000 utterances
         for i in range(1000):

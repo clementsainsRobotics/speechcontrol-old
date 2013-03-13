@@ -17,6 +17,7 @@ class SpeechRecognizer(QtCore.QObject):
 
     def oneUtterance(self):
         self.backend.recognizeFromMicrophone(SC_SHARE_PATH + '/utts/hyp' + str(self.uttid))
+        self.uttid += 1
 
     def oneUtteranceTo(self, receiver, method, errMethod):
         pass

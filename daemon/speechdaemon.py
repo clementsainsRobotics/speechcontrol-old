@@ -6,6 +6,7 @@ import os
 import time
 import atexit
 import signal
+import logging
 
 from PyQt4 import QtCore, QtDBus
 from PyQt4.QtDBus import QDBusConnection
@@ -136,16 +137,22 @@ class SpeechDaemon(Daemon):
         # Instantiate all classes, adaptors and register interfaces
 
         app = QtCore.QCoreApplication(sys.argv)
+        logging.debug("QCoreApplication initialized")
+
         self.speechRecognizer = SpeechRecognizer()
         self.recogAdaptor = RecognizerAdaptor(self.speechRecognizer)
 
         connection = QtDBus.QDBusConnection.sessionBus()
         connection.registerObject("/SpeechRecognizer", self.speechRecognizer)
         connection.registerService("org.sii.speechcontrol")
+        logging.info("D-Bus service established")
 
+        logging.info("Entering Qt main loop")
         rc = app.exec_()
 
 if __name__ == "__main__":
-    print("*** SpeechDaemon starting...")
+    logging.basicConfig(filename="/tmp/speechcontrol.log", level=logging.INFO)
+    logging.info("SpeechDaemon starts up")
+
     daemon = SpeechDaemon("/tmp/speechcontrol.pid")
     daemon.start()
