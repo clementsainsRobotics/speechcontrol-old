@@ -11,3 +11,4 @@ global.hpp
 tests/cmake/*
 obj*gnu
 bin*gnu
+*.cpython*
