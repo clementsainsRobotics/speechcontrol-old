@@ -1,6 +1,5 @@
 debian
 build
-.*
 *~
 CMakeLists.txt.user
 .kdev4
