@@ -7,11 +7,33 @@ import time
 import atexit
 import signal
 import logging
+import argparse
 
 from PyQt4 import QtCore, QtDBus
 from PyQt4.QtDBus import QDBusConnection
 
 from asr.recognizer import SpeechRecognizer, RecognizerAdaptor
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--loglevel',
+    choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+    default="INFO",
+    help='set logging level')
+
+args = parser.parse_args()
+
+def getLogLevel():
+    if args.loglevel == "DEBUG":
+        return logging.DEBUG
+    elif args.loglevel == "INFO":
+        return logging.INFO
+    elif args.loglevel == "WARNING":
+        return logging.WARNING
+    elif args.loglevel == "ERROR":
+        return logging.ERROR
+    elif args.loglevel == "CRITICAL":
+        return logging.CRITICAL
+    return None
 
 class Daemon:
     """A generic daemon class.
@@ -151,7 +173,7 @@ class SpeechDaemon(Daemon):
         rc = app.exec_()
 
 if __name__ == "__main__":
-    logging.basicConfig(filename="/tmp/speechdaemon.log", level=logging.INFO)
+    logging.basicConfig(filename="/tmp/speechdaemon.log", level=getLogLevel())
     logging.info("SpeechDaemon starts up")
 
     daemon = SpeechDaemon("/tmp/speechdaemon.pid")
