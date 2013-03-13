@@ -137,7 +137,7 @@ class SpeechDaemon(Daemon):
         # Instantiate all classes, adaptors and register interfaces
 
         app = QtCore.QCoreApplication(sys.argv)
-        logging.info("QCoreApplication initialized")
+        logging.debug("QCoreApplication initialized")
 
         self.speechRecognizer = SpeechRecognizer()
         self.recogAdaptor = RecognizerAdaptor(self.speechRecognizer)
