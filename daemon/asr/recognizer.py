@@ -1,8 +1,13 @@
+import logging
+logger = logging.getLogger(__name__)
+
 from PyQt4 import QtCore, QtDBus
 from PyQt4.QtCore import pyqtSlot
 
 from .backend import NativePocketSphinx
+from os import getenv
 
+SC_SHARE_PATH = getenv('HOME') + '/.sii/share/speechcontrol'
 DBUS_INTROSPECTION_XML = """
   <interface name="org.sii.speechcontrol.recognition">
   </interface>
@@ -36,7 +41,7 @@ class SpeechRecognizer(QtCore.QObject):
     # through D-Bus and does not n need to open any files.
     @pyqtSlot(str)
     def utteranceReady(self, sinkFileName):
-        pass
+        logger.debug("Utterance ready in " + sinkFileName + " file")
 
 class RecognizerAdaptor(QtDBus.QDBusAbstractAdaptor):
 
