@@ -151,8 +151,8 @@ class SpeechDaemon(Daemon):
         rc = app.exec_()
 
 if __name__ == "__main__":
-    logging.basicConfig(filename="/tmp/speechcontrol.log", level=logging.INFO)
+    logging.basicConfig(filename="/tmp/speechdaemon.log", level=logging.INFO)
     logging.info("SpeechDaemon starts up")
 
-    daemon = SpeechDaemon("/tmp/speechcontrol.pid")
+    daemon = SpeechDaemon("/tmp/speechdaemon.pid")
     daemon.start()
