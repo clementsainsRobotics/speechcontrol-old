@@ -19,6 +19,12 @@ parser.add_argument('--loglevel',
     choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
     default="INFO",
     help='set logging level')
+parser.add_argument('--logfile',
+    default="/var/log/speechdaemon.log",
+    help="set log file")
+parser.add_argument('--pidfile',
+    default="/tmp/speechdaemon.pid",
+    help="set pid file")
 
 args = parser.parse_args()
 
@@ -34,6 +40,12 @@ def getLogLevel():
     elif args.loglevel == "CRITICAL":
         return logging.CRITICAL
     return None
+
+def getLogFile():
+    return args.logfile
+
+def getPidFile():
+    return args.pidfile
 
 class Daemon:
     """A generic daemon class.
@@ -173,8 +185,8 @@ class SpeechDaemon(Daemon):
         rc = app.exec_()
 
 if __name__ == "__main__":
-    logging.basicConfig(filename="/tmp/speechdaemon.log", level=getLogLevel())
+    logging.basicConfig(filename=getLogFile(), level=getLogLevel())
     logging.info("SpeechDaemon starts up")
 
-    daemon = SpeechDaemon("/tmp/speechdaemon.pid")
+    daemon = SpeechDaemon(getPidFile())
     daemon.start()
