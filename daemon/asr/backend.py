@@ -10,10 +10,10 @@ Gst.init(None)
 import logging
 logger = logging.getLogger(__name__)
 
-from .pocketsphinx import PocketSphinx
+from pocketsphinx import PocketSphinx
 from PyQt4 import QtCore
 
-from PyQt4.QtCore import QObject
+from PyQt4.QtCore import QObject, QThread, pyqtSlot
 
 from os import getenv
 # from sii import SC_SHARE_PATH, SC_CONFIG_PATH
@@ -70,6 +70,12 @@ class NativePocketSphinx(QObject):
         logger.debug("Initializing audio recording")
         self.ps.initializeAudio()
 
+        self.contWorker = ContinuousAsrWorker()
+        self.workerThread = QThread(self)
+        self.workerThread.started.connect(self.contWorker.start)
+        self.workerThread.finished.connect(self.contWorker.deleteLater)
+        self.contWorker.moveToThread(self.workerThread)
+
     def recognizeFromMicrophone(self, sinkFileName):
         self.ps.recognizeFromMicrophone(sinkFileName)
         self.recognizedToFile.emit(sinkFileName)
@@ -84,16 +90,33 @@ class NativePocketSphinx(QObject):
     # This will probably need a separate thread (QThread to be used)
     def startContinuousRecognition(self):
         logger.info("Starting continuous speech recognition")
-        logger.warning("Implementation not ready")
-
-        continuousSinkFileNameBase = SC_SHARE_PATH + '/contrecog/utts/hyp'
-        # We don't want infinite loop so let's say 1000 utterances
-        for i in range(1000):
-            self.recognizeFromMicrophone(continuousSinkFileNameBase + str(i))
+        self.workerThread.start()
 
     def stopContinuousRecognition(self):
-        pass
+        logger.info("Stopping continuous speech recognition")
+        self.workerThread.quit()
 
     @classmethod
     def supported():
         return True
+
+"""
+This class is meant to be used along with QThread to implement asynchronous,
+continuous automatic speech recognition.
+Used by NativePocketSphinx.
+#FIXME: Segmentation fault
+"""
+class ContinuousAsrWorker(QObject):
+    def __init__(self):
+        super().__init__()
+
+    @pyqtSlot()
+    def start(self):
+        logger.debug("Continuous ASR worker starts")
+        logger.warning("Continuous ASR not implemented yet")
+
+        #continuousSinkFileNameBase = SC_SHARE_PATH + '/contrecog/utts/hyp'
+        #i = 1
+        #while True:
+            #self.ps.recognizeFromMicrophone(continuousSinkFileNameBase + str(i))
+            #i += 1
