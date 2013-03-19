@@ -80,14 +80,17 @@ class NativePocketSphinx(QObject):
         self.ps.recognizeFromMicrophone(sinkFileName)
         self.recognizedToFile.emit(sinkFileName)
 
-    # This should return an iterator for n file names following some schema
-    def fileNamesRange(self, n):
-        pass
+    # This returns an iterator for n file names following some naming schema
+    def fileNamesRange(self, n, stem="hyp"):
+        for i in range(1, n+1):
+            yield stem + str(i)
 
     #TODO: Write a solution for continuous recognition
     # Location of written files (and naming schema) should be governed by
     # a configuration manager
     # This will probably need a separate thread (QThread to be used)
+    # FIXME: We should probably shut down the main PS instance to avoid conflicts
+    # between it and the worker
     def startContinuousRecognition(self):
         logger.info("Starting continuous speech recognition")
         self.workerThread.start()
@@ -104,19 +107,27 @@ class NativePocketSphinx(QObject):
 This class is meant to be used along with QThread to implement asynchronous,
 continuous automatic speech recognition.
 Used by NativePocketSphinx.
-#FIXME: Segmentation fault
+#FIXME: Not entirely working - fails to save the result to a file
 """
 class ContinuousAsrWorker(QObject):
     def __init__(self):
         super().__init__()
+        self.ps = None
+        self.finish = False
 
     @pyqtSlot()
     def start(self):
         logger.debug("Continuous ASR worker starts")
-        logger.warning("Continuous ASR not implemented yet")
 
-        #continuousSinkFileNameBase = SC_SHARE_PATH + '/contrecog/utts/hyp'
-        #i = 1
-        #while True:
-            #self.ps.recognizeFromMicrophone(continuousSinkFileNameBase + str(i))
-            #i += 1
+        logger.info("Initializing PocketSphinx backend")
+        self.ps = PocketSphinx()
+        logger.debug("Initializing PocketSphinx decoder")
+        self.ps.initializeDecoder()
+        logger.debug("Initializing audio recording")
+        self.ps.initializeAudio()
+
+        continuousSinkFileNameBase = SC_SHARE_PATH + '/contrecog/utts/hyp'
+        i = 1
+        while not self.finish:
+            self.ps.recognizeFromMicrophone(continuousSinkFileNameBase + str(i))
+            i += 1
