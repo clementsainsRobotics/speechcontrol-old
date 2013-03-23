@@ -10,7 +10,7 @@ Gst.init(None)
 import logging
 logger = logging.getLogger(__name__)
 
-from pocketsphinx import PocketSphinx
+from .pocketsphinx import PocketSphinx
 from PyQt4 import QtCore
 
 from PyQt4.QtCore import QObject, QThread, pyqtSlot

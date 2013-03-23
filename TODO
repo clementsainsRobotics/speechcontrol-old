@@ -3,7 +3,7 @@ For SpeechControl package:
 
 For SpeechDaemon:
   ✔ Add more API to SpeechRecognizer @api @done (23-03-2013)
-  ☐ Fill D-Bus introspection info
+  + Fill D-Bus introspection info @done (23-03-2013)
   ✔ Test if it runs @testing @done (13-02-03 20:46)
        -- It almost works - GStreamer0.10 turned out to be buggy however :/
   - Unify how utterance id is managed
