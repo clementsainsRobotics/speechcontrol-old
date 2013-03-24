@@ -8,3 +8,4 @@ For SpeechDaemon:
        -- It almost works - GStreamer0.10 turned out to be buggy however :/
   - Unify how utterance id is managed
   - Introduce configuration object
+  - Implement safe file saving
