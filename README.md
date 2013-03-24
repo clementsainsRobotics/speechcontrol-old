@@ -27,23 +27,17 @@ you to:
 For more detailed instructions look into the INSTALL file.
 Usual build procedure is as follows:
 
-    $ cd speechcontrol
-    $ python setup.py build
-    # python setup.py install
+    $ python daemonsetup.py build
+    $ python packagesetup.py build
+    $ python trainersetup.py build
+
+    # python daemonsetup.py install
+    # python packagesetup.py install
+    # python trainersetup.py install
 
 ## Bug Reporting
 
-Any and all bugs should be reported to http://bugs.thesii.org
-That link points to the issue tracking system used to maintain any and all
-activities pertaining to SpeechControl. The exact link for bug reporting
-when it comes to SpeechControl is
-http://bugs.thesii.org/enter_bug.cgi?product=speechcontrol.
-
-It's recommended that you first test if SpeechControl works on your system
-and then try debugging SpeechControl. To produce meaningful information
-for SpeechControl bug reporting, try building SpeechControl with
-CMAKE_BUILD_TYPE set to 'RelWithDebInfo' or 'Debug'. Check the INSTALL
-file for more information about the build and execution cycle of SpeechControl.
+Use our GitHub Issues feature enabled for SpeechControl to post about problems.
 
 ## Contact
 You can reach the development team behind SpeechControl at their
@@ -54,9 +48,9 @@ Thank you for using our software. More information regarding SpeechControl
 can be found at http://thesii.org/wiki/SpeechControl.
 
 
-**
+***
 One Vision. One Purpose
 
 The Synthetic Intellect Institute :: F/OSS AI
 
-http://www.thesii.org :: spchcntrl-users@thesii.org :: #sii-speechcontrol on irc.freenode.net
+http://www.thesii.org :: spchcntrl-users@thesii.org
