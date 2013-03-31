@@ -1,3 +1,4 @@
+from abc import ABCMeta, abstractmethod
 # GStreamer imports
 import gi
 gi.require_version('Gst', '1.0')
@@ -16,12 +17,30 @@ from PyQt4 import QtCore
 from PyQt4.QtCore import QObject, QThread, pyqtSlot
 
 from os import getenv
+#TODO: create global SII Python module containing information about our projects
 # from sii import SC_SHARE_PATH, SC_CONFIG_PATH
 SC_SHARE_PATH = getenv('HOME') + '/.sii/share/speechcontrol'
 SC_CONFIG_PATH = getenv('HOME') + '/.sii/config/speechcontrol'
 
-class GstPocketSphinx:
+class RecognitionBackend(QObject, metaclass=ABCMeta):
     def __init__(self):
+        super().__init__()
+
+    @abstractmethod
+    def recognizeFromMicrophone(self, sinkFileName):
+        raise NotImplementedError("You should use a real backend")
+
+    #TODO: Implement automatic way of checking if a particular backend is usable
+    #       on a given system
+    @classmethod
+    @abstractmethod
+    def supported():
+        return False
+
+class GstPocketSphinx(RecognitionBackend):
+    def __init__(self):
+        super().__init__()
+
         self.pipeline = Gst.parse_launch('autoaudiosrc ! audioconvert ! audioresample '
                                          + '! vader name=vad auto-threshold=true '
                                          + '! pocketsphinx name=asr ! fakesink') # pocketsphinx element is failing
@@ -45,7 +64,6 @@ class GstPocketSphinx:
     def application_message(self):
         pass
 
-    #Signals the state of support - currently not working
     @classmethod
     def supported():
         return False
@@ -57,7 +75,7 @@ Alternative approach is being implemented based on using PocketSphinx Python
 bindings. It should at least support singular utterance recognition using user's
 microphone.
 """
-class NativePocketSphinx(QObject):
+class NativePocketSphinx(RecognitionBackend):
     recognizedToFile = QtCore.pyqtSignal(str)
 
     def __init__(self):
