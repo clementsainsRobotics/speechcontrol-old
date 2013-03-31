@@ -35,6 +35,12 @@ Usual build procedure is as follows:
     # python packagesetup.py install
     # python trainersetup.py install
 
+## Testing
+
+We use nosetests for launching tests - go to the directory with a subproject
+(daemon, for example) and run `nosetests' from there. You should see some
+PocketSphinx output and finally the report.
+
 ## Bug Reporting
 
 Use our GitHub Issues feature enabled for SpeechControl to post about problems.
