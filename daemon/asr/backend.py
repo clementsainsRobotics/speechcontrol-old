@@ -1,16 +1,20 @@
-from abc import ABCMeta, abstractmethod
-# GStreamer imports
-import gi
-gi.require_version('Gst', '1.0')
-
-from gi.repository import GObject, Gst
-GObject.threads_init()
-Gst.init(None)
-
-# SpeechDaemon imports
 import logging
 logger = logging.getLogger(__name__)
 
+from abc import ABCMeta, abstractmethod
+
+# GStreamer imports
+try:
+    import gi
+    gi.require_version('Gst', '1.0')
+
+    from gi.repository import GObject, Gst
+    GObject.threads_init()
+    Gst.init(None)
+except ImportError:
+    logger.warning("GStreamer backend is unavailable on this platform")
+
+# SpeechDaemon imports
 from .pocketsphinx import PocketSphinx
 from PyQt4 import QtCore
 
@@ -83,16 +87,26 @@ class NativePocketSphinx(RecognitionBackend):
 
         logger.info("Initializing PocketSphinx backend")
         self.ps = PocketSphinx()
+
+        self.enablePocketSphinx()
+
+        self.contWorker = ContinuousAsrWorker()
+        self.workerThread = QThread(self)
+        self.workerThread.started.connect(self.contWorker.start)
+        self.workerThread.finished.connect(self.contWorker.stop)
+        self.contWorker.moveToThread(self.workerThread)
+
+    def enablePocketSphinx(self):
         logger.debug("Initializing PocketSphinx decoder")
         self.ps.initializeDecoder()
         logger.debug("Initializing audio recording")
         self.ps.initializeAudio()
 
-        self.contWorker = ContinuousAsrWorker()
-        self.workerThread = QThread(self)
-        self.workerThread.started.connect(self.contWorker.start)
-        self.workerThread.finished.connect(self.contWorker.deleteLater)
-        self.contWorker.moveToThread(self.workerThread)
+    def disablePocketSphinx(self):
+        logger.debug("Shutting down audio recording")
+        self.ps.shutdownAudio()
+        logger.debug("Shutting down PocketSphinx decoder")
+        self.ps.shutdownDecoder()
 
     def recognizeFromMicrophone(self, sinkFileName):
         self.ps.recognizeFromMicrophone(sinkFileName)
@@ -103,19 +117,15 @@ class NativePocketSphinx(RecognitionBackend):
         for i in range(1, n+1):
             yield stem + str(i)
 
-    #TODO: Write a solution for continuous recognition
-    # Location of written files (and naming schema) should be governed by
-    # a configuration manager
-    # This will probably need a separate thread (QThread to be used)
-    # FIXME: We should probably shut down the main PS instance to avoid conflicts
-    # between it and the worker
     def startContinuousRecognition(self):
         logger.info("Starting continuous speech recognition")
+        self.disablePocketSphinx()
         self.workerThread.start()
 
     def stopContinuousRecognition(self):
         logger.info("Stopping continuous speech recognition")
         self.workerThread.quit()
+        self.enablePocketSphinx()
 
     @classmethod
     def supported():
@@ -133,19 +143,35 @@ class ContinuousAsrWorker(QObject):
         self.ps = None
         self.finish = False
 
-    @pyqtSlot()
-    def start(self):
-        logger.debug("Continuous ASR worker starts")
-
-        logger.info("Initializing PocketSphinx backend")
-        self.ps = PocketSphinx()
+    def enablePocketSphinx(self):
         logger.debug("Initializing PocketSphinx decoder")
         self.ps.initializeDecoder()
         logger.debug("Initializing audio recording")
         self.ps.initializeAudio()
 
+    def disablePocketSphinx(self):
+        logger.debug("Shutting down audio recording")
+        self.ps.shutdownAudio()
+        logger.debug("Shutting down PocketSphinx decoder")
+        self.ps.shutdownDecoder()
+
+    @pyqtSlot()
+    def start(self):
+        logger.debug("Continuous ASR worker starts")
+
+        logger.info("Initializing PocketSphinx backend for continuous speech recognition")
+        self.ps = PocketSphinx()
+        self.enablePocketSphinx()
+
         continuousSinkFileNameBase = SC_SHARE_PATH + '/contrecog/utts/hyp'
-        i = 1
+        uttid = 1
         while not self.finish:
-            self.ps.recognizeFromMicrophone(continuousSinkFileNameBase + str(i))
-            i += 1
+            self.ps.recognizeFromMicrophone(continuousSinkFileNameBase + str(uttid))
+            uttid += 1
+
+        self.disablePocketSphinx()
+        self.deleteLater()
+
+    @pyqtSlot()
+    def stop(self):
+        self.finish = True
