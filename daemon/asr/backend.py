@@ -26,7 +26,7 @@ from os import getenv
 SC_SHARE_PATH = getenv('HOME') + '/.sii/share/speechcontrol'
 SC_CONFIG_PATH = getenv('HOME') + '/.sii/config/speechcontrol'
 
-class AsrBackend(QObject, metaclass=ABCMeta):
+class AsrBackend(QObject):
     def __init__(self):
         super().__init__()
 
@@ -38,7 +38,7 @@ class AsrBackend(QObject, metaclass=ABCMeta):
     #       on a given system
     @classmethod
     @abstractmethod
-    def supported():
+    def supported(self):
         return False
 
 class GstPocketSphinx(AsrBackend):
@@ -69,7 +69,7 @@ class GstPocketSphinx(AsrBackend):
         pass
 
     @classmethod
-    def supported():
+    def supported(self):
         return False
 
 """
@@ -112,11 +112,6 @@ class NativePocketSphinx(AsrBackend):
         self.ps.recognizeFromMicrophone(sinkFileName)
         self.recognizedToFile.emit(sinkFileName)
 
-    # This returns an iterator for n file names following some naming schema
-    def fileNamesRange(self, n, stem="hyp"):
-        for i in range(1, n+1):
-            yield stem + str(i)
-
     def startContinuousRecognition(self):
         logger.info("Starting continuous speech recognition")
         self.disablePocketSphinx()
@@ -128,7 +123,7 @@ class NativePocketSphinx(AsrBackend):
         self.enablePocketSphinx()
 
     @classmethod
-    def supported():
+    def supported(self):
         return True
 
 """
