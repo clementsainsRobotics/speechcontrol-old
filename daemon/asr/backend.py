@@ -26,7 +26,7 @@ from os import getenv
 SC_SHARE_PATH = getenv('HOME') + '/.sii/share/speechcontrol'
 SC_CONFIG_PATH = getenv('HOME') + '/.sii/config/speechcontrol'
 
-class RecognitionBackend(QObject, metaclass=ABCMeta):
+class AsrBackend(QObject, metaclass=ABCMeta):
     def __init__(self):
         super().__init__()
 
@@ -41,7 +41,7 @@ class RecognitionBackend(QObject, metaclass=ABCMeta):
     def supported():
         return False
 
-class GstPocketSphinx(RecognitionBackend):
+class GstPocketSphinx(AsrBackend):
     def __init__(self):
         super().__init__()
 
@@ -79,7 +79,7 @@ Alternative approach is being implemented based on using PocketSphinx Python
 bindings. It should at least support singular utterance recognition using user's
 microphone.
 """
-class NativePocketSphinx(RecognitionBackend):
+class NativePocketSphinx(AsrBackend):
     recognizedToFile = QtCore.pyqtSignal(str)
 
     def __init__(self):

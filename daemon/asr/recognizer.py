@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 from PyQt4 import QtCore, QtDBus
 from PyQt4.QtCore import pyqtSlot
 
-from .backend import NativePocketSphinx
+from .backend import AsrBackend, NativePocketSphinx
 from os import getenv
 
 SC_SHARE_PATH = getenv('HOME') + '/.sii/share/speechcontrol'
@@ -28,6 +28,12 @@ DBUS_INTROSPECTION_XML = """
 class SpeechRecognizer(QtCore.QObject):
     def __init__(self):
         super().__init__()
+
+        #TODO: Check availability of all backends and choose the default one
+        #       using configuration defaults
+        self.supportedBackends = [b for b in AsrBackend.__subclasses__() if b.supported()]
+        if len(self.supportedBackends) == 0:
+            raise RuntimeError("No speech recognition backends available!")
         self.backend = NativePocketSphinx()
         self.uttid = 1
 
