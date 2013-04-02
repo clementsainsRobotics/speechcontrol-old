@@ -9,8 +9,6 @@ from os import getenv
 
 SC_SHARE_PATH = getenv('HOME') + '/.sii/share/speechcontrol'
 DBUS_INTROSPECTION_XML = """
-  <!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
-  <node>
     <interface name="org.sii.speechcontrol.SpeechRecognition">
         <signal name="utteranceReady">
             <arg type="s" />
@@ -22,7 +20,6 @@ DBUS_INTROSPECTION_XML = """
         <method name="stopContinuousRecognition">
         </method>
     </interface>
-  </node>
 """
 
 class SpeechRecognizer(QtCore.QObject):
