@@ -14,6 +14,7 @@ DBUS_INTROSPECTION_XML = """
             <arg type="s" />
         </signal>
         <method name="oneUtterance">
+            <arg name="hyp" type="s" direction="out" />
         </method>
         <method name="startContinuousRecognition">
         </method>
@@ -63,8 +64,15 @@ class RecognizerAdaptor(QtDBus.QDBusAbstractAdaptor):
     utteranceReady = QtCore.pyqtSignal(str)
 
     def __init__(self, parent):
-       super().__init__(parent)
-       parent.backend.recognizedToFile.connect(self.utteranceWritten)
+        super().__init__(parent)
+        parent.backend.recognizedToFile.connect(self.utteranceWritten)
+
+    @pyqtSlot()
+    def oneUtterance(self):
+        logger.debug("One utterance requested")
+        self.parent().oneUtterance()
+        #TODO:Possibly return recognized utterance here
+        return "fake hypothesis"
 
     @pyqtSlot(str)
     def utteranceWritten(fileName):
