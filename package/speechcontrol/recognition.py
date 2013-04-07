@@ -14,13 +14,14 @@ class RecognitionInterface(QtDBus.QDBusAbstractInterface):
         return msg.arguments()[0]
 
     def oneUtteranceAsync(self):
-        self.callAsync("oneUtterance")
+        self.asyncCall("oneUtterance")
 
     def oneUtteranceTo(self, receiver, method, errMethod):
         self.callWithCallback("oneUtterance", [], receiver, method, errMethod)
 
 class AsrFacility(QtCore.QObject):
     def __init__(self):
+        #TODO: Connect proper signals
         super().__init__()
         self.recogIface = RecognitionInterface(DBUS_SERVICE, DBUS_OBJECT_PATH, 
             QtDBus.QDBusConnection.sessionBus(), self)
@@ -36,7 +37,6 @@ class AsrFacility(QtCore.QObject):
         """Request one utterance from SpeechControl
 
             This call is asynchronous, to use it one has to connect the signal
-            ... to a slot responsible for handling the text.
+            utteranceReady to a slot responsible for handling the text.
         """
-        #TODO: Connect proper signals
         self.recogIface.oneUtteranceAsync()
