@@ -1,0 +1,3 @@
+#!/bin/sh
+mkdir -pv $HOME/.sii/speechcontrol/{utts,contrecog}
+mkdir -pv $HOME/.sii/speechcontrol/contrecog/utts

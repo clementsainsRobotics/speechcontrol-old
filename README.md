@@ -37,6 +37,11 @@ Usual build procedure is as follows:
 
 ## Testing
 
+First and foremost issue the following commands:
+
+    $ ./mk-scdirs
+    $ ./mk-psext
+
 We use nosetests for launching tests - go to the directory with a subproject
 (daemon, for example) and run `nosetests' from there. You should see some
 PocketSphinx output and finally the report.
