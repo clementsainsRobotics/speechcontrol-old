@@ -109,8 +109,10 @@ class NativePocketSphinx(AsrBackend):
         self.ps.shutdownDecoder()
 
     def recognizeFromMicrophone(self, sinkFileName):
+        logger.debug("[NativePocketSphinx] Recognizing from microphone to " + sinkFileName)
         self.ps.recognizeFromMicrophone(sinkFileName)
         self.recognizedToFile.emit(sinkFileName)
+        logger.debug("[NativePocketSphinx] Recognition done")
 
     def startContinuousRecognition(self):
         logger.info("Starting continuous speech recognition")

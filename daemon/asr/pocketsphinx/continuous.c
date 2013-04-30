@@ -77,6 +77,7 @@ static const arg_t cont_args_def[] = {
 static ps_decoder_t *ps;
 static cmd_ln_t *config;
 static FILE* rawfd;
+static char *logfn = "/tmp/speechdaemon-ps.log";
 
 static mic_recognizer_t*
 mic_recognizer_new(void)
@@ -324,6 +325,10 @@ recognize_from_microphone(mic_recognizer_t *recognizer,
     FILE *sinkFile = fopen(sinkFileName, "w");
     fprintf(sinkFile, "%s\n%s\n", uttid, hyp);
 
+    /* Log the result */
+    FILE *logFile = fopen(logfn, "w");
+    fprintf(logFile, "%s\n%s\n", uttid, hyp);
+
     /* Resume A/D recording for next utterance */
     if (ad_start_rec(recognizer->ad) < 0)
         E_FATAL("Failed to start recording\n");
@@ -343,24 +348,32 @@ sighandler(int signo)
     longjmp(jbuf, 1);
 }
 
+// static char *arg0 = "pocketsphinx-continuous-speechcontrol";
+// static char *arg1 = "-logfn /tmp/speechdaemon-ps.log";
+// static char *arg2 = "\0";
+
 static mic_recognizer_t*
 initialize_decoder(mic_recognizer_t *recognizer)
 {
-    char const *cfg;
-    int argc = 1;
-    char *argv[2];
+    // int argc = 2;
+    // char *argv[3];
 
-    char *arg1 = "-adcdev default";
-    char *arg2 = "\0";
-    argv[0] = arg1;
-    argv[1] = arg2;
+    // argv[0] = arg0;
+    // argv[1] = arg1;
+    // argv[2] = arg2;
 
-    config = cmd_ln_parse_r(NULL, cont_args_def, argc, argv, FALSE);
+    config = cmd_ln_init(NULL, ps_args(), TRUE,
+                            //"-hmm", MODELDIR "/hmm/en_US/hub4wsj_sc_8k",
+                            //"-lm", MODELDIR "/lm/en/turtle.DMP",
+                            //"-dict", MODELDIR "/lm/en/turtle.dic",
+                            "-logfn", logfn,
+                            NULL);
+    config = cmd_ln_init(config, cont_args_def, TRUE,
+                            "-time", "no",
+                            NULL);
 
-    /* Handle argument file as -argfile. */
-    if (config && (cfg = cmd_ln_str_r(config, "-argfile")) != NULL) {
-        config = cmd_ln_parse_file_r(config, cont_args_def, cfg, FALSE);
-    }
+    // config = cmd_ln_parse_r(NULL, cont_args_def, argc, argv, FALSE);
+
     if (config == NULL)
         return NULL;
 
@@ -369,7 +382,6 @@ initialize_decoder(mic_recognizer_t *recognizer)
         return NULL;
 
     recognizer->ps = ps;
-    E_INFO("%s COMPILED ON: %s, AT: %s\n\n", argv[0], __DATE__, __TIME__);
 
     /* Make sure we exit cleanly (needed for profiling among other things) */
     /* Signals seem to be broken in arm-wince-pe. */
