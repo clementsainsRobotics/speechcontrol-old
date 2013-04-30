@@ -4,6 +4,6 @@ python:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq libpocketsphinx-dev libsphinxbase-dev
-  - sudo pip-3.3 install cython
+  - sudo pip install cython
 script:
   - sh ./mk-psext
