@@ -324,10 +324,11 @@ recognize_from_microphone(mic_recognizer_t *recognizer,
     /* Write the result to a file */
     FILE *sinkFile = fopen(sinkFileName, "w");
     fprintf(sinkFile, "%s\n%s\n", uttid, hyp);
+    fclose(sinkFile);
 
     /* Log the result */
-    FILE *logFile = fopen(logfn, "w");
-    fprintf(logFile, "%s\n%s\n", uttid, hyp);
+//     FILE *logFile = fopen(logfn, "w");
+//     fprintf(logFile, "%s\n%s\n", uttid, hyp);
 
     /* Resume A/D recording for next utterance */
     if (ad_start_rec(recognizer->ad) < 0)
@@ -405,28 +406,3 @@ shutdown_recognizer(mic_recognizer_t *recognizer)
 //     shutdown_decoder(recognizer);
     free(recognizer);
 }
-
-/** Silvio Moioli: Windows CE/Mobile entry point added. */
-#if defined(_WIN32_WCE)
-#pragma comment(linker,"/entry:mainWCRTStartup")
-#include <windows.h>
-
-//Windows Mobile has the Unicode main only
-int wmain(int32 argc, wchar_t *wargv[]) {
-    char** argv;
-    size_t wlen;
-    size_t len;
-    int i;
-
-    argv = malloc(argc*sizeof(char*));
-    for (i=0; i<argc; i++){
-        wlen = lstrlenW(wargv[i]);
-        len = wcstombs(NULL, wargv[i], wlen);
-        argv[i] = malloc(len+1);
-        wcstombs(argv[i], wargv[i], wlen);
-    }
-
-    //assuming ASCII parameters
-    return main(argc, argv);
-}
-#endif
