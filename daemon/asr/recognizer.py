@@ -71,14 +71,14 @@ class RecognizerAdaptor(QtDBus.QDBusAbstractAdaptor):
     def oneUtterance(self):
         logger.debug("One utterance requested")
         self.parent().oneUtterance()
-        #TODO:Possibly return recognized utterance here
-        return "fake hypothesis"
 
     @pyqtSlot(str)
-    def utteranceWritten(fileName):
+    def utteranceWritten(self, fileName):
         logger.debug("Utterance written to file " + fileName)
         with open(fileName) as f:
             uttid = f.readline()
             hyp   = f.readline()
+
+            logger.debug("Recognized " + hyp)
             self.utteranceReady.emit(hyp)
 
