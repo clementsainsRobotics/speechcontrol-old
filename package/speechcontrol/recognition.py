@@ -5,21 +5,21 @@ DBUS_SERVICE = "org.sii.speechcontrol"
 DBUS_OBJECT_PATH = "/SpeechRecognizer"
 DBUS_INTERFACE = "org.sii.speechcontrol.SpeechRecognition"
 
-class RecognitionInterface(QtDBus.QDBusInterface):
-    utteranceReady = QtCore.pyqtSignal(str)
+#class RecognitionInterface(QtDBus.QDBusInterface):
+    #utteranceReady = QtCore.pyqtSignal(str)
 
-    def __init__(self, service, path, connection, parent=None):
-        super().__init__(service, path, DBUS_INTERFACE, connection, parent)
+    #def __init__(self, service, path, connection, parent=None):
+        #super().__init__(service, path, DBUS_INTERFACE, connection, parent)
 
-    def oneUtterance(self):
-        msg = self.call("oneUtterance")
-        return msg.arguments()[0]
+    #def oneUtterance(self):
+        #msg = self.call("oneUtterance")
+        #return msg.arguments()[0]
 
-    def oneUtteranceAsync(self):
-        self.asyncCall("oneUtterance")
+    #def oneUtteranceAsync(self):
+        #self.asyncCall("oneUtterance")
 
-    def oneUtteranceTo(self, receiver, method, errMethod):
-        self.callWithCallback("oneUtterance", [], receiver, method, errMethod)
+    #def oneUtteranceTo(self, receiver, method, errMethod):
+        #self.callWithCallback("oneUtterance", [], receiver, method, errMethod)
 
 class AsrFacility(QtCore.QObject):
     def __init__(self):
@@ -48,5 +48,8 @@ class AsrFacility(QtCore.QObject):
             Note: you may need to make the callback a proper Qt slot by using
             pyqtSlot decorator.
         """
-        #FIXME:The interface apparently doesn't expose this signal
-        self.recogIface.utteranceReady.connect(recv)
+        self.recogIface.connection().connect(DBUS_SERVICE,
+                                             DBUS_OBJECT_PATH,
+                                             DBUS_INTERFACE,
+                                             "utteranceReady",
+                                             recv)
