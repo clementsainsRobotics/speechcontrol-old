@@ -32,7 +32,7 @@ class SpeechRecognizer(QtCore.QObject):
         self.supportedBackends = [b for b in AsrBackend.__subclasses__() if b.supported()]
         if len(self.supportedBackends) == 0:
             raise RuntimeError("No speech recognition backends available!")
-        self.backend = NativePocketSphinx()
+        self.backend = NativePocketSphinx() # self.config['defaultBackend']()
         self.uttid = 1
 
     def oneUtterance(self):
@@ -76,8 +76,8 @@ class RecognizerAdaptor(QtDBus.QDBusAbstractAdaptor):
     def utteranceWritten(self, fileName):
         logger.debug("Utterance written to file " + fileName)
         with open(fileName) as f:
-            uttid = f.readline()
-            hyp   = f.readline()
+            uttid = f.readline().strip()
+            hyp   = f.readline().strip()
 
             logger.debug("Recognized " + hyp)
             self.utteranceReady.emit(hyp)

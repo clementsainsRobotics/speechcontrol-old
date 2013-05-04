@@ -184,25 +184,6 @@ class SpeechDaemon(Daemon):
         logging.info("Entering Qt main loop")
         return app.exec_()
 
-#def pseudoRun():
-    #"""Only for bug-investigation
-    #"""
-    ## Instantiate all classes, adaptors and register interfaces
-
-    #app = QtCore.QCoreApplication(sys.argv)
-    #logging.debug("QCoreApplication initialized")
-
-    #speechRecognizer = SpeechRecognizer()
-    #recogAdaptor = RecognizerAdaptor(speechRecognizer)
-
-    #connection = QtDBus.QDBusConnection.sessionBus()
-    #connection.registerObject("/SpeechRecognizer", speechRecognizer)
-    #connection.registerService("org.sii.speechcontrol")
-    #logging.info("D-Bus service established")
-
-    #logging.info("Entering Qt main loop")
-    #return app.exec_()
-
 if __name__ == "__main__":
     logging.basicConfig(filename=getLogFile(), level=getLogLevel())
     logging.info("SpeechDaemon starts up")

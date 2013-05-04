@@ -1,7 +1,7 @@
 import logging
 logger = logging.getLogger(__name__)
 
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod
 
 # GStreamer imports
 try:
@@ -124,6 +124,7 @@ class NativePocketSphinx(AsrBackend):
         self.workerThread.quit()
         self.enablePocketSphinx()
 
+    #TODO: Implement actual checking of availability of the backend
     @classmethod
     def supported(self):
         return True
