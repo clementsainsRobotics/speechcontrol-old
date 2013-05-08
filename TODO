@@ -6,6 +6,4 @@ For SpeechDaemon:
   + Fill D-Bus introspection info @done (23-03-2013)
   ✔ Test if it runs @testing @done (13-02-03 20:46)
        -- It almost works - GStreamer0.10 turned out to be buggy however :/
-  - Unify how utterance id is managed
-  - Introduce configuration object
-  - Implement safe file saving
+  - Introduce configuration setup
