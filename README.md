@@ -43,8 +43,11 @@ First and foremost issue the following commands:
     $ ./mk-psext
 
 We use nosetests for launching tests - go to the directory with a subproject
-(daemon, for example) and run `nosetests' from there. You should see some
-PocketSphinx output and finally the report.
+(daemon, for example) and run `nosetests' from there. You should see the report.
+
+Because of the interactive nature of the PocketSphinx (it needs voice input
+from microphone) there are special tests (under tests/special) that you have to
+run yourself - they will usually need your voice input.
 
 ## Bug Reporting
 
