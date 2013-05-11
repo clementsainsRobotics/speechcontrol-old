@@ -1,3 +1,5 @@
+import logging
+
 cdef class PocketSphinx:
     cdef mic_recognizer_t *r
     cdef public bint decoderReady, audioReady
@@ -26,10 +28,21 @@ cdef class PocketSphinx:
         initialize_audio(self.r)
         self.audioReady = True
 
+    def shutdownAudio(self):
+        if self.audioReady:
+            print("*** Shutting down audio")
+            shutdown_audio(self.r)
+
+    def shutdownDecoder(self):
+        if self.decoderReady:
+            print("*** Shutting down decoder")
+            shutdown_decoder(self.r)
+
     def recognizeFromMicrophone(self, sinkFile):
-        print ("*** Recognizing from microphone")
+        logging.debug("*** Recognizing from microphone")
         bSinkFile = sinkFile.encode("ascii")
 
-        #TODO: Implement exception here
         if self.decoderReady and self.audioReady:
             recognize_from_microphone(self.r, bSinkFile)
+        else:
+            logging.warning("*** Decoder or audio device not ready")
