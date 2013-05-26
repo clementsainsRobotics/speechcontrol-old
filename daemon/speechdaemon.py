@@ -7,11 +7,45 @@ import time
 import atexit
 import signal
 import logging
+import argparse
 
 from PyQt4 import QtCore, QtDBus
 from PyQt4.QtDBus import QDBusConnection
 
 from asr.recognizer import SpeechRecognizer, RecognizerAdaptor
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--loglevel',
+    choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+    default="INFO",
+    help='set logging level')
+parser.add_argument('--logfile',
+    default="/var/log/speechdaemon.log",
+    help="set log file")
+parser.add_argument('--pidfile',
+    default="/tmp/speechdaemon.pid",
+    help="set pid file")
+
+args = parser.parse_args()
+
+def getLogLevel():
+    if args.loglevel == "DEBUG":
+        return logging.DEBUG
+    elif args.loglevel == "INFO":
+        return logging.INFO
+    elif args.loglevel == "WARNING":
+        return logging.WARNING
+    elif args.loglevel == "ERROR":
+        return logging.ERROR
+    elif args.loglevel == "CRITICAL":
+        return logging.CRITICAL
+    return None
+
+def getLogFile():
+    return args.logfile
+
+def getPidFile():
+    return args.pidfile
 
 class Daemon:
     """A generic daemon class.
@@ -148,11 +182,11 @@ class SpeechDaemon(Daemon):
         logging.info("D-Bus service established")
 
         logging.info("Entering Qt main loop")
-        rc = app.exec_()
+        return app.exec_()
 
 if __name__ == "__main__":
-    logging.basicConfig(filename="/tmp/speechcontrol.log", level=logging.INFO)
+    logging.basicConfig(filename=getLogFile(), level=getLogLevel())
     logging.info("SpeechDaemon starts up")
 
-    daemon = SpeechDaemon("/tmp/speechcontrol.pid")
+    daemon = SpeechDaemon(getPidFile())
     daemon.start()
